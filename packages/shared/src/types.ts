@@ -112,7 +112,7 @@ export interface Restaurant {
   lng: number;
   trending: boolean;
   offer?: string | null;
-  menu: MenuItem[];
+  menuItems: MenuItem[];
 }
 
 export type FoodOrderStatus = "placed" | "preparing" | "out_for_delivery" | "delivered" | "cancelled";

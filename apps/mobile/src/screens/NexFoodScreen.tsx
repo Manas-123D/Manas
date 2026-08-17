@@ -54,7 +54,7 @@ export function NexFoodScreen() {
             <Text style={[type.caption, { color: colors.textMuted }]}>★ {r.rating} · {r.etaMinutes} min</Text>
           </View>
           <Text style={[type.caption, { color: colors.textMuted }]}>{r.cuisine.join(" · ")}</Text>
-          {r.menu.map((item) => {
+          {r.menuItems.map((item) => {
             const isSelected = order?.restaurant.id === r.id && order.itemId === item.id;
             return (
               <Pressable
