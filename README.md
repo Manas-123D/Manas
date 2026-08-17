@@ -60,7 +60,7 @@ npm install                          # installs all workspaces
 cd services/api
 cp .env.example .env                 # set DATABASE_URL + ANTHROPIC_API_KEY
 npm run prisma:migrate
-npm run seed                         # demo user + Bengaluru launch-area data
+npm run seed                         # demo user + Hyderabad launch-area data
 npm run dev                          # http://localhost:4000
 
 # 2. Mobile app (separate terminal)

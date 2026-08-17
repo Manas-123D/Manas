@@ -7,9 +7,9 @@ import { PrimaryButton } from "../components/PrimaryButton";
 import { useTheme, brand } from "../theme";
 import { apiRequest } from "../api/client";
 
-// Demo route: home -> work, from the seeded Bengaluru demo account.
-const PICKUP = { lat: 12.9719, lng: 77.6412, label: "Home" };
-const DROPOFF = { lat: 12.9698, lng: 77.75, label: "Work" };
+// Demo route: home -> work, from the seeded Hyderabad demo account.
+const PICKUP = { lat: 17.4401, lng: 78.3489, label: "Home" };
+const DROPOFF = { lat: 17.4483, lng: 78.3915, label: "Work" };
 
 const VEHICLE_LABEL: Record<RideVehicleType, string> = { bike: "Bike", auto: "Auto", cab: "Cab", pool: "Pool" };
 

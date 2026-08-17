@@ -7,7 +7,7 @@ const DELIVERY_AGENT_NAMES = ["Farhan", "Swathi", "Bosco", "Rekha", "Ajay"];
 // location per launch city, used purely to give meds tracking a real pickup
 // point. Swap for a proper Pharmacy table once there's more than one per city.
 const NEAREST_PHARMACY: Record<string, { lat: number; lng: number }> = {
-  Bengaluru: { lat: 12.9791, lng: 77.6104 },
+  Hyderabad: { lat: 17.438, lng: 78.347 },
 };
 
 function nearestPharmacyFor(city: string, fallback: { lat: number; lng: number }) {

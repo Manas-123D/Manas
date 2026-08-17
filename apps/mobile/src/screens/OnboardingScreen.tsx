@@ -14,7 +14,7 @@ export function OnboardingScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("demo@nexserv.app");
   const [password, setPassword] = useState("password123");
-  const [city, setCity] = useState("Bengaluru");
+  const [city, setCity] = useState("Hyderabad");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

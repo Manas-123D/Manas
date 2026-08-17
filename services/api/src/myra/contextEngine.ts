@@ -7,33 +7,33 @@ import { AggregatedContext, NearbySpot } from "./types";
 // trails") instead of a vague "go for a walk". Swap for Google/Mapbox Places
 // once there's a key — the shape (NearbySpot[]) stays the same either way.
 const NEARBY_SPOTS: Record<string, NearbySpot[]> = {
-  Bengaluru: [
+  Hyderabad: [
     {
       name: "KBR National Park",
       vibe: "shaded walking trails, birdsong, far enough from the main road that traffic noise fades out",
       goodFor: ["walk", "unwind", "reset"],
-      distanceKm: 3.2,
+      distanceKm: 8.4,
       quietness: "quiet",
     },
     {
-      name: "Cubbon Park",
-      vibe: "wide open lawns, old rain trees, gentle breeze in the evenings",
-      goodFor: ["walk", "run", "read"],
-      distanceKm: 4.8,
+      name: "Durgam Cheruvu (Secret Lake)",
+      vibe: "a rocky lakeside path with a glass sky-walk bridge, quiet water, best right around sunset",
+      goodFor: ["walk", "unwind", "photography"],
+      distanceKm: 4.6,
+      quietness: "quiet",
+    },
+    {
+      name: "Kondapur Botanical Garden",
+      vibe: "wide green lawns, a small lake, mostly local families and joggers - calm on weekday evenings",
+      goodFor: ["walk", "run", "unwind"],
+      distanceKm: 3.9,
       quietness: "moderate",
     },
     {
-      name: "Lalbagh Botanical Garden",
-      vibe: "century-old trees, a lake, mostly quiet on weekday mornings",
-      goodFor: ["walk", "unwind", "photography"],
-      distanceKm: 5.5,
-      quietness: "quiet",
-    },
-    {
-      name: "Sankey Tank",
-      vibe: "a calm lake loop, joggers in the morning, quiet by evening",
+      name: "Necklace Road (Hussain Sagar)",
+      vibe: "a long lakeside promenade with an open breeze, lively but never crowded on the walking path",
       goodFor: ["walk", "run"],
-      distanceKm: 6.1,
+      distanceKm: 11.2,
       quietness: "moderate",
     },
   ],

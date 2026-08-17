@@ -1,10 +1,11 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../db/prisma";
 
-// Seeds one launch area (Indiranagar, Bengaluru) so the app is usable end to
-// end out of the box: one demo user, restaurants, medicines and partners.
+// Seeds one launch area (Gachibowli / HITEC City, Hyderabad) so the app is
+// usable end to end out of the box: one demo user, restaurants, medicines
+// and partners.
 async function main() {
-  const city = "Bengaluru";
+  const city = "Hyderabad";
 
   const passwordHash = await bcrypt.hash("password123", 10);
   const user = await prisma.user.upsert({
@@ -16,10 +17,10 @@ async function main() {
       passwordHash,
       city,
       phone: "+91 90000 00000",
-      homeLat: 12.9719,
-      homeLng: 77.6412,
-      workLat: 12.9698,
-      workLng: 77.75,
+      homeLat: 17.4401,
+      homeLng: 78.3489,
+      workLat: 17.4483,
+      workLng: 78.3915,
     },
   });
 
@@ -33,14 +34,14 @@ async function main() {
 
   const restaurant = await prisma.restaurant.create({
     data: {
-      name: "Thindi Beedi Kitchen",
+      name: "Annapurna Tiffins",
       cuisine: ["South Indian", "Healthy"],
       rating: 4.6,
       etaMinutes: 25,
       distanceKm: 2.1,
       city,
-      lat: 12.9737,
-      lng: 77.6402,
+      lat: 17.441,
+      lng: 78.351,
       trending: true,
       offer: "20% off on orders above ₹200",
       menuItems: {
@@ -61,8 +62,8 @@ async function main() {
       etaMinutes: 35,
       distanceKm: 3.4,
       city,
-      lat: 12.9698,
-      lng: 77.6482,
+      lat: 17.447,
+      lng: 78.385,
       trending: false,
       offer: null,
       menuItems: {
@@ -82,8 +83,8 @@ async function main() {
       etaMinutes: 20,
       distanceKm: 1.4,
       city,
-      lat: 12.9755,
-      lng: 77.6357,
+      lat: 17.443,
+      lng: 78.355,
       trending: true,
       offer: "Free smoothie on your first order",
       menuItems: {

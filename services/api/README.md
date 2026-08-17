@@ -8,7 +8,7 @@ Express + TypeScript + Prisma backend for NexServ, including Myra's context, ins
 cp .env.example .env        # fill in DATABASE_URL and ANTHROPIC_API_KEY
 npm install
 npm run prisma:migrate      # creates tables
-npm run seed                # demo user + Bengaluru launch-area data
+npm run seed                # demo user + Hyderabad launch-area data
 npm run dev                 # http://localhost:4000
 ```
 
