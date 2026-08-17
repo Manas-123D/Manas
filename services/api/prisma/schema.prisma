@@ -1,0 +1,203 @@
+// NexServ data model.
+// Every service module (Ride/Food/Meds/Home) plus Myra's context/insight/chat
+// tables and the NexCare partner-side tables live in one schema so Myra can
+// join across them when it reasons about a user.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  passwordHash  String
+  phone         String?
+  city          String
+  homeLat       Float?
+  homeLng       Float?
+  workLat       Float?
+  workLng       Float?
+  createdAt     DateTime @default(now())
+
+  preferences       Preference[]
+  contextSignals    ContextSignal[]
+  insights          MyraInsight[]
+  chatMessages      ChatMessage[]
+  rideRequests      RideRequest[]
+  foodOrders        FoodOrder[]
+  medOrders         MedOrder[]
+  homeServiceReqs   HomeServiceRequest[]
+}
+
+model Preference {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  key       String   // e.g. "food.cuisine", "ride.default_vehicle"
+  value     String
+  createdAt DateTime @default(now())
+
+  @@index([userId, key])
+}
+
+// ---------------- Myra ----------------
+
+model ContextSignal {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  type       String   // location | calendar | weather | traffic | time | service_history | preference
+  payload    Json
+  observedAt DateTime @default(now())
+
+  @@index([userId, type, observedAt])
+}
+
+model MyraInsight {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  headline   String
+  detail     String
+  confidence Float
+  service    String   // ride | food | meds | home | general
+  action     Json?
+  dismissed  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ChatMessage {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  role           String   // user | myra | system
+  content        String
+  proposedAction Json?
+  createdAt      DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+// ---------------- NexRide ----------------
+
+model RideRequest {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  pickupLat     Float
+  pickupLng     Float
+  dropoffLat    Float
+  dropoffLng    Float
+  vehicleType   String   // bike | auto | cab | pool
+  status        String   @default("requested")
+  priceEstimate Float
+  etaMinutes    Int
+  driverName    String?
+  createdAt     DateTime @default(now())
+}
+
+// ---------------- NexFood ----------------
+
+model Restaurant {
+  id          String   @id @default(cuid())
+  name        String
+  cuisine     String[]
+  rating      Float
+  etaMinutes  Int
+  distanceKm  Float
+  city        String
+  menuItems   MenuItem[]
+}
+
+model MenuItem {
+  id               String     @id @default(cuid())
+  restaurantId     String
+  restaurant       Restaurant @relation(fields: [restaurantId], references: [id])
+  name             String
+  price            Float
+  isVeg            Boolean
+  prepTimeMinutes  Int
+}
+
+model FoodOrder {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  restaurantId String
+  items        Json     // [{ itemId, quantity }]
+  status       String   @default("placed")
+  total        Float
+  etaMinutes   Int
+  createdAt    DateTime @default(now())
+}
+
+// ---------------- NexMeds ----------------
+
+model Medicine {
+  id                  String  @id @default(cuid())
+  name                String
+  requiresPrescription Boolean @default(false)
+  price               Float
+  packSize            String
+}
+
+model MedOrder {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  medicineIds    String[]
+  status         String   @default("placed")
+  etaMinutes     Int
+  refillOfOrderId String?
+  createdAt      DateTime @default(now())
+}
+
+// ---------------- NexHome ----------------
+
+model HomeServiceRequest {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  category        String   // electrician | plumber | ac_technician | cleaning | appliance_repair
+  description     String
+  scheduledFor    DateTime
+  status          String   @default("requested")
+  technicianName  String?
+  priceEstimate   Float
+  createdAt       DateTime @default(now())
+}
+
+// ---------------- NexCare (partners) ----------------
+
+model Partner {
+  id                        String   @id @default(cuid())
+  name                      String
+  role                      String   // driver | delivery_partner | electrician | plumber | ac_technician | cleaner | appliance_technician
+  city                      String
+  rating                    Float    @default(5)
+  completedJobs             Int      @default(0)
+  loyaltyTier               String   @default("bronze")
+  loyaltyPoints             Int      @default(0)
+  trainingModulesCompleted  Int      @default(0)
+  createdAt                 DateTime @default(now())
+
+  incentives PartnerIncentive[]
+}
+
+model PartnerIncentive {
+  id          String    @id @default(cuid())
+  partnerId   String
+  partner     Partner   @relation(fields: [partnerId], references: [id])
+  title       String
+  description String
+  kind        String    // financial | wellbeing | growth | recognition
+  achievedAt  DateTime?
+}

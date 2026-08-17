@@ -1,0 +1,21 @@
+{
+  "name": "nexserv",
+  "private": true,
+  "version": "0.1.0",
+  "description": "NexServ - AI-powered everyday ecosystem, orchestrated by Myra.",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "api:dev": "npm run dev --workspace services/api",
+    "api:build": "npm run build --workspace services/api",
+    "mobile:start": "npm run start --workspace apps/mobile",
+    "shared:build": "npm run build --workspace packages/shared",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=18.18"
+  }
+}
