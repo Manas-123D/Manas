@@ -39,6 +39,10 @@ async function main() {
       etaMinutes: 25,
       distanceKm: 2.1,
       city,
+      lat: 12.9737,
+      lng: 77.6402,
+      trending: true,
+      offer: "20% off on orders above ₹200",
       menuItems: {
         create: [
           { name: "Masala Dosa", price: 90, isVeg: true, prepTimeMinutes: 12 },
@@ -57,10 +61,35 @@ async function main() {
       etaMinutes: 35,
       distanceKm: 3.4,
       city,
+      lat: 12.9698,
+      lng: 77.6482,
+      trending: false,
+      offer: null,
       menuItems: {
         create: [
           { name: "Butter Chicken", price: 260, isVeg: false, prepTimeMinutes: 18 },
           { name: "Paneer Tikka", price: 210, isVeg: true, prepTimeMinutes: 15 },
+        ],
+      },
+    },
+  });
+
+  await prisma.restaurant.create({
+    data: {
+      name: "Green Bowl Co.",
+      cuisine: ["Healthy", "Salads", "Smoothies"],
+      rating: 4.8,
+      etaMinutes: 20,
+      distanceKm: 1.4,
+      city,
+      lat: 12.9755,
+      lng: 77.6357,
+      trending: true,
+      offer: "Free smoothie on your first order",
+      menuItems: {
+        create: [
+          { name: "Quinoa Power Bowl", price: 220, isVeg: true, prepTimeMinutes: 10 },
+          { name: "Mango Smoothie", price: 120, isVeg: true, prepTimeMinutes: 5 },
         ],
       },
     },
@@ -83,6 +112,11 @@ async function main() {
       status: "delivered",
       total: 90,
       etaMinutes: 25,
+      pickupLat: restaurant.lat,
+      pickupLng: restaurant.lng,
+      dropoffLat: user.homeLat!,
+      dropoffLng: user.homeLng!,
+      agentName: "Naveen",
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
     },
   });

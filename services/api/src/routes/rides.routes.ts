@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { AuthedRequest, requireAuth } from "../middleware/auth";
-import { quoteRideOptions, createRideRequest, listRideHistory } from "../modules/rides/service";
+import { quoteRideOptions, createRideRequest, listRideHistory, getRideTracking } from "../modules/rides/service";
 import { buildContext } from "../myra/contextEngine";
 
 export const ridesRouter = Router();
@@ -34,4 +34,8 @@ ridesRouter.post("/", async (req: AuthedRequest, res) => {
 
 ridesRouter.get("/", async (req: AuthedRequest, res) => {
   res.json({ rides: await listRideHistory(req.userId!) });
+});
+
+ridesRouter.get("/:id/track", async (req: AuthedRequest, res) => {
+  res.json({ tracking: await getRideTracking(req.userId!, req.params.id) });
 });

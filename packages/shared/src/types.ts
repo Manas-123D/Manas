@@ -108,6 +108,10 @@ export interface Restaurant {
   rating: number;
   etaMinutes: number;
   distanceKm: number;
+  lat: number;
+  lng: number;
+  trending: boolean;
+  offer?: string | null;
   menu: MenuItem[];
 }
 
@@ -199,4 +203,20 @@ export interface PartnerIncentive {
   description: string;
   kind: "financial" | "wellbeing" | "growth" | "recognition";
   achievedAt?: string;
+}
+
+// ---------- Live tracking (rides, food & meds deliveries) ----------
+
+export type TrackingKind = "ride" | "food" | "meds";
+
+export interface TrackingState {
+  kind: TrackingKind;
+  status: string;
+  progress: number; // 0-1, fraction of the route completed
+  agentName: string;
+  agentLocation: GeoPoint;
+  origin: GeoPoint;
+  destination: GeoPoint;
+  etaRemainingMinutes: number;
+  totalEtaMinutes: number;
 }

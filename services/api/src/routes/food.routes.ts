@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { AuthedRequest, requireAuth } from "../middleware/auth";
-import { listRestaurants, createFoodOrder, listFoodOrderHistory } from "../modules/food/service";
+import { listRestaurants, createFoodOrder, listFoodOrderHistory, getFoodOrderTracking } from "../modules/food/service";
 import { buildContext } from "../myra/contextEngine";
 
 export const foodRouter = Router();
@@ -26,4 +26,8 @@ foodRouter.post("/orders", async (req: AuthedRequest, res) => {
 
 foodRouter.get("/orders", async (req: AuthedRequest, res) => {
   res.json({ orders: await listFoodOrderHistory(req.userId!) });
+});
+
+foodRouter.get("/orders/:id/track", async (req: AuthedRequest, res) => {
+  res.json({ tracking: await getFoodOrderTracking(req.userId!, req.params.id) });
 });

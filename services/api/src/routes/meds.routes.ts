@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { AuthedRequest, requireAuth } from "../middleware/auth";
-import { listMedicines, createMedOrder, refillLastOrder, listMedOrderHistory, MEDICAL_ADVICE_DISCLAIMER } from "../modules/meds/service";
+import { listMedicines, createMedOrder, refillLastOrder, listMedOrderHistory, getMedOrderTracking, MEDICAL_ADVICE_DISCLAIMER } from "../modules/meds/service";
 
 export const medsRouter = Router();
 medsRouter.use(requireAuth);
@@ -30,4 +30,8 @@ medsRouter.post("/orders/refill", async (req: AuthedRequest, res) => {
 
 medsRouter.get("/orders", async (req: AuthedRequest, res) => {
   res.json({ orders: await listMedOrderHistory(req.userId!) });
+});
+
+medsRouter.get("/orders/:id/track", async (req: AuthedRequest, res) => {
+  res.json({ tracking: await getMedOrderTracking(req.userId!, req.params.id) });
 });

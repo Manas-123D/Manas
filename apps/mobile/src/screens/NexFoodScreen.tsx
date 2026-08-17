@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Restaurant } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -8,9 +9,9 @@ import { apiRequest } from "../api/client";
 
 export function NexFoodScreen() {
   const { colors, spacing, radius, type } = useTheme();
+  const navigation = useNavigation<any>();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [order, setOrder] = useState<{ restaurant: Restaurant; itemId: string } | null>(null);
-  const [confirmed, setConfirmed] = useState<{ etaMinutes: number; total: number } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,27 +22,14 @@ export function NexFoodScreen() {
     if (!order) return;
     setLoading(true);
     try {
-      const res = await apiRequest<{ order: { etaMinutes: number; total: number } }>("/food/orders", {
+      const res = await apiRequest<{ order: { id: string } }>("/food/orders", {
         method: "POST",
         body: { restaurantId: order.restaurant.id, items: [{ itemId: order.itemId, quantity: 1 }] },
       });
-      setConfirmed(res.order);
+      navigation.replace("Tracking", { kind: "food", id: res.order.id });
     } finally {
       setLoading(false);
     }
-  }
-
-  if (confirmed) {
-    return (
-      <Screen>
-        <Text style={[type.title, { color: colors.textPrimary }]}>Order placed 🍔</Text>
-        <View style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.xs }}>
-          <Text style={[type.body, { color: colors.textSecondary }]}>Total ₹{confirmed.total}</Text>
-          <Text style={[type.subtitle, { color: colors.textPrimary }]}>Arriving in ~{confirmed.etaMinutes} min</Text>
-        </View>
-        <PrimaryButton label="Order again" onPress={() => { setConfirmed(null); setOrder(null); }} />
-      </Screen>
-    );
   }
 
   return (
@@ -51,8 +39,18 @@ export function NexFoodScreen() {
 
       {restaurants.map((r) => (
         <View key={r.id} style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.sm }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={[type.subtitle, { color: colors.textPrimary }]}>{r.name}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+                <Text style={[type.subtitle, { color: colors.textPrimary }]}>{r.name}</Text>
+                {r.trending && (
+                  <View style={{ backgroundColor: brand.food + "22", paddingHorizontal: 8, paddingVertical: 2, borderRadius: radius.pill }}>
+                    <Text style={[type.micro, { color: brand.food }]}>🔥 TRENDING</Text>
+                  </View>
+                )}
+              </View>
+              {r.offer && <Text style={[type.caption, { color: colors.success, marginTop: 2 }]}>{r.offer}</Text>}
+            </View>
             <Text style={[type.caption, { color: colors.textMuted }]}>★ {r.rating} · {r.etaMinutes} min</Text>
           </View>
           <Text style={[type.caption, { color: colors.textMuted }]}>{r.cuisine.join(" · ")}</Text>

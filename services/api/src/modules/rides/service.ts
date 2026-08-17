@@ -1,5 +1,6 @@
 import { prisma } from "../../db/prisma";
 import { GeoPoint, RideOption, RideVehicleType } from "@nexserv/shared";
+import { computeTracking } from "../../tracking/computeTracking";
 
 const VEHICLES: { type: RideVehicleType; baseFare: number; perKm: number; baseEta: number }[] = [
   { type: "bike", baseFare: 15, perKm: 5, baseEta: 4 },
@@ -52,4 +53,16 @@ export async function createRideRequest(userId: string, pickup: GeoPoint, dropof
 
 export function listRideHistory(userId: string) {
   return prisma.rideRequest.findMany({ where: { userId }, orderBy: { createdAt: "desc" }, take: 20 });
+}
+
+export async function getRideTracking(userId: string, rideId: string) {
+  const ride = await prisma.rideRequest.findFirstOrThrow({ where: { id: rideId, userId } });
+  return computeTracking(
+    "ride",
+    ride.driverName ?? "Your driver",
+    { lat: ride.pickupLat, lng: ride.pickupLng },
+    { lat: ride.dropoffLat, lng: ride.dropoffLng },
+    ride.createdAt,
+    ride.etaMinutes
+  );
 }

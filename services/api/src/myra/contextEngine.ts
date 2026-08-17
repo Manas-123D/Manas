@@ -1,5 +1,43 @@
 import { prisma } from "../db/prisma";
-import { AggregatedContext } from "./types";
+import { AggregatedContext, NearbySpot } from "./types";
+
+// Standing in for a real Places API: a small curated set of real, specific
+// spots per launch city, with enough sensory detail that Myra can give a
+// grounded, concrete recommendation ("KBR Park, soft birdsong, shaded
+// trails") instead of a vague "go for a walk". Swap for Google/Mapbox Places
+// once there's a key — the shape (NearbySpot[]) stays the same either way.
+const NEARBY_SPOTS: Record<string, NearbySpot[]> = {
+  Bengaluru: [
+    {
+      name: "KBR National Park",
+      vibe: "shaded walking trails, birdsong, far enough from the main road that traffic noise fades out",
+      goodFor: ["walk", "unwind", "reset"],
+      distanceKm: 3.2,
+      quietness: "quiet",
+    },
+    {
+      name: "Cubbon Park",
+      vibe: "wide open lawns, old rain trees, gentle breeze in the evenings",
+      goodFor: ["walk", "run", "read"],
+      distanceKm: 4.8,
+      quietness: "moderate",
+    },
+    {
+      name: "Lalbagh Botanical Garden",
+      vibe: "century-old trees, a lake, mostly quiet on weekday mornings",
+      goodFor: ["walk", "unwind", "photography"],
+      distanceKm: 5.5,
+      quietness: "quiet",
+    },
+    {
+      name: "Sankey Tank",
+      vibe: "a calm lake loop, joggers in the morning, quiet by evening",
+      goodFor: ["walk", "run"],
+      distanceKm: 6.1,
+      quietness: "moderate",
+    },
+  ],
+};
 
 // Weather/traffic providers are pluggable. For launch-city rollout, swap these
 // two functions for real calls (e.g. OpenWeather, Google Maps Traffic) — the
@@ -93,5 +131,6 @@ export async function buildContext(userId: string): Promise<AggregatedContext> {
         : undefined,
     },
     preferences: Object.fromEntries(preferences.map((p) => [p.key, p.value])),
+    nearbySpots: NEARBY_SPOTS[user.city] ?? [],
   };
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { RideOption, RideVehicleType } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -14,10 +15,10 @@ const VEHICLE_LABEL: Record<RideVehicleType, string> = { bike: "Bike", auto: "Au
 
 export function NexRideScreen() {
   const { colors, spacing, radius, type } = useTheme();
+  const navigation = useNavigation<any>();
   const [options, setOptions] = useState<RideOption[]>([]);
   const [selected, setSelected] = useState<RideVehicleType | null>(null);
   const [loading, setLoading] = useState(false);
-  const [booked, setBooked] = useState<{ driverName?: string; etaMinutes: number } | null>(null);
 
   async function getQuotes() {
     setLoading(true);
@@ -33,11 +34,11 @@ export function NexRideScreen() {
     if (!selected) return;
     setLoading(true);
     try {
-      const res = await apiRequest<{ ride: { driverName?: string; etaMinutes: number } }>("/rides", {
+      const res = await apiRequest<{ ride: { id: string } }>("/rides", {
         method: "POST",
         body: { pickup: PICKUP, dropoff: DROPOFF, vehicleType: selected },
       });
-      setBooked(res.ride);
+      navigation.replace("Tracking", { kind: "ride", id: res.ride.id });
     } finally {
       setLoading(false);
     }
@@ -46,19 +47,6 @@ export function NexRideScreen() {
   React.useEffect(() => {
     getQuotes();
   }, []);
-
-  if (booked) {
-    return (
-      <Screen>
-        <Text style={[type.title, { color: colors.textPrimary }]}>Ride confirmed 🚕</Text>
-        <View style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.xs }}>
-          <Text style={[type.body, { color: colors.textSecondary }]}>{booked.driverName ?? "Your driver"} is on the way</Text>
-          <Text style={[type.subtitle, { color: colors.textPrimary }]}>Arriving in ~{booked.etaMinutes} min</Text>
-        </View>
-        <PrimaryButton label="Book another" onPress={() => setBooked(null)} />
-      </Screen>
-    );
-  }
 
   return (
     <Screen>

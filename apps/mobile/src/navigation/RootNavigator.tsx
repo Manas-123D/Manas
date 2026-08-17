@@ -13,6 +13,7 @@ import { NexFoodScreen } from "../screens/NexFoodScreen";
 import { NexMedsScreen } from "../screens/NexMedsScreen";
 import { NexHomeScreen } from "../screens/NexHomeScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
+import { TrackingScreen } from "../screens/TrackingScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,6 +52,7 @@ function AppStack() {
       <Stack.Screen name="NexFood" component={NexFoodScreen} options={{ title: "NexFood" }} />
       <Stack.Screen name="NexMeds" component={NexMedsScreen} options={{ title: "NexMeds" }} />
       <Stack.Screen name="NexHome" component={NexHomeScreen} options={{ title: "NexHome" }} />
+      <Stack.Screen name="Tracking" component={TrackingScreen} options={{ title: "Live tracking" }} />
     </Stack.Navigator>
   );
 }

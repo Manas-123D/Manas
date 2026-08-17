@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Medicine } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -8,10 +9,10 @@ import { apiRequest } from "../api/client";
 
 export function NexMedsScreen() {
   const { colors, spacing, radius, type } = useTheme();
+  const navigation = useNavigation<any>();
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [disclaimer, setDisclaimer] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
-  const [confirmed, setConfirmed] = useState<{ etaMinutes: number } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,21 +26,11 @@ export function NexMedsScreen() {
     if (!selected) return;
     setLoading(true);
     try {
-      const res = await apiRequest<{ order: { etaMinutes: number } }>("/meds/orders", { method: "POST", body: { medicineIds: [selected] } });
-      setConfirmed(res.order);
+      const res = await apiRequest<{ order: { id: string } }>("/meds/orders", { method: "POST", body: { medicineIds: [selected] } });
+      navigation.replace("Tracking", { kind: "meds", id: res.order.id });
     } finally {
       setLoading(false);
     }
-  }
-
-  if (confirmed) {
-    return (
-      <Screen>
-        <Text style={[type.title, { color: colors.textPrimary }]}>Order placed 💊</Text>
-        <Text style={[type.subtitle, { color: colors.textPrimary }]}>Arriving in ~{confirmed.etaMinutes} min</Text>
-        <PrimaryButton label="Order again" onPress={() => { setConfirmed(null); setSelected(null); }} />
-      </Screen>
-    );
   }
 
   return (

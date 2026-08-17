@@ -114,6 +114,10 @@ model Restaurant {
   etaMinutes  Int
   distanceKm  Float
   city        String
+  lat         Float
+  lng         Float
+  trending    Boolean    @default(false)
+  offer       String?
   menuItems   MenuItem[]
 }
 
@@ -136,6 +140,11 @@ model FoodOrder {
   status       String   @default("placed")
   total        Float
   etaMinutes   Int
+  pickupLat    Float
+  pickupLng    Float
+  dropoffLat   Float
+  dropoffLng   Float
+  agentName    String?
   createdAt    DateTime @default(now())
 }
 
@@ -157,6 +166,11 @@ model MedOrder {
   status         String   @default("placed")
   etaMinutes     Int
   refillOfOrderId String?
+  pickupLat      Float
+  pickupLng      Float
+  dropoffLat     Float
+  dropoffLng     Float
+  agentName      String?
   createdAt      DateTime @default(now())
 }
 
