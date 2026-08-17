@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "NexServ",
+    "slug": "nexserv",
+    "scheme": "nexserv",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "backgroundColor": "#0B1220"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.nexserv.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0B1220"
+      },
+      "package": "app.nexserv.mobile"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
