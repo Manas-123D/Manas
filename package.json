@@ -12,7 +12,8 @@
     "api:dev": "npm run dev --workspace services/api",
     "api:build": "npm run build --workspace services/api",
     "mobile:start": "npm run start --workspace apps/mobile",
-    "shared:build": "npm run build --workspace packages/shared"
+    "shared:build": "npm run build --workspace packages/shared",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "engines": {
     "node": ">=18.18"

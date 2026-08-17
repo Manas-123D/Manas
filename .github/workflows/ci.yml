@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  typecheck:
+    name: Typecheck (shared, api, mobile)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate --schema services/api/prisma/schema.prisma
+        env:
+          # prisma generate only reads the schema; it never connects to this.
+          DATABASE_URL: postgresql://user:password@localhost:5432/nexserv
+
+      - name: Typecheck all workspaces
+        run: npm run typecheck
