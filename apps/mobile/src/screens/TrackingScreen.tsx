@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { TrackingKind, TrackingState } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
-import { RouteTracker } from "../components/RouteTracker";
+import { RouteMap } from "../components/RouteMap";
 import { useTheme, brand } from "../theme";
 import { apiRequest } from "../api/client";
 
@@ -67,11 +67,12 @@ export function TrackingScreen() {
       {tracking && (
         <>
           <View style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.lg }}>
-            <RouteTracker
+            <RouteMap
               kind={kind}
               progress={tracking.progress}
-              originLabel={tracking.origin.label ?? "Pickup"}
-              destinationLabel={tracking.destination.label ?? "Drop-off"}
+              origin={tracking.origin}
+              destination={tracking.destination}
+              agentLocation={tracking.agentLocation}
             />
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
               <View>
