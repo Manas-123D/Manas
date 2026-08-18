@@ -15,10 +15,10 @@ import { apiRequest } from "../api/client";
 // Stand-in for restaurant photography: a rotating set of cover gradients so
 // the list reads with visual variety instead of every card looking the same.
 const COVER_GRADIENTS: readonly (readonly [string, string])[] = [
-  ["#FF8A3D", "#FF5F6D"],
   ["#2FB3A3", "#1D8577"],
-  ["#B18CFF", "#7C4CFF"],
   ["#5FA8FF", "#3D5FFF"],
+  ["#B18CFF", "#7C4CFF"],
+  ["#FF8A3D", "#FF5F6D"],
 ];
 
 function coverEmoji(cuisine: string[]): string {

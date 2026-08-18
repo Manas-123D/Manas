@@ -15,11 +15,12 @@ const SPARKLE = "M50,4 C54,30 70,46 96,50 C70,54 54,70 50,96 C46,70 30,54 4,50 C
 
 /**
  * Myra's mark: a gradient sparkle with a small "face" band, inspired by the
- * reference logo (cyan -> violet -> coral, friendly glowing eyes, an orbit
- * ring with a companion planet). Rendered as SVG so it stays crisp from a
- * 16px tab icon up to an 84px profile avatar, and drawn on a transparent
- * background so it composites cleanly on both themes rather than carrying
- * the reference's fixed black backdrop.
+ * reference logo (friendly glowing eyes, an orbit ring with a companion
+ * planet) but on a cool cyan -> violet -> magenta gradient rather than the
+ * reference's warm tips, so Myra never reads as "orange" anywhere in the
+ * app. Rendered as SVG so it stays crisp from a 16px tab icon up to an 84px
+ * profile avatar, and drawn on a transparent background so it composites
+ * cleanly on both themes rather than carrying a fixed black backdrop.
  */
 export function MyraOrb({ size = 40, active = true, detailed = size >= 32 }: MyraOrbProps) {
   const pulse = useRef(new Animated.Value(1)).current;
@@ -46,7 +47,7 @@ export function MyraOrb({ size = 40, active = true, detailed = size >= 32 }: Myr
             <LinearGradient id={gradientId} x1="10%" y1="0%" x2="90%" y2="100%">
               <Stop offset="0%" stopColor="#4FD2FF" />
               <Stop offset="50%" stopColor="#8B5CF6" />
-              <Stop offset="100%" stopColor="#FF7A59" />
+              <Stop offset="100%" stopColor="#C061F0" />
             </LinearGradient>
           </Defs>
 

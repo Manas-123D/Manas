@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { Restaurant } from "@nexserv/shared";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 import { GlassCard } from "./GlassCard";
 import { PressableScale } from "./PressableScale";
 
@@ -11,13 +12,17 @@ export function TrendingCard({ restaurant, onPress }: { restaurant: Restaurant; 
 
   return (
     <PressableScale style={{ width: 210 }} onPress={onPress} scaleTo={0.96}>
-      <GlassCard padding={0} radius={radius.lg} gradientBorder={restaurant.trending ? [brand.food, "#FF5F6D"] : undefined}>
-        {!restaurant.trending && <View style={[styles.accentBar, { backgroundColor: colors.glassBorder }]} />}
+      <GlassCard padding={0} radius={radius.lg}>
+        {restaurant.trending ? (
+          <LinearGradient colors={gradients.myra} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.accentBar} />
+        ) : (
+          <View style={[styles.accentBar, { backgroundColor: colors.glassBorder }]} />
+        )}
         <View style={{ padding: spacing.md }}>
           {restaurant.trending && (
-            <View style={[styles.badge, styles.badgeRow, { backgroundColor: brand.food + "22", borderRadius: radius.pill, marginBottom: spacing.xs }]}>
-              <Ionicons name="flame" size={11} color={brand.food} />
-              <Text style={[type.micro, { color: brand.food }]}>TRENDING</Text>
+            <View style={[styles.badge, styles.badgeRow, { backgroundColor: brand.myraMid + "1c", borderRadius: radius.pill, marginBottom: spacing.xs }]}>
+              <Ionicons name="trending-up" size={11} color={brand.myraMid} />
+              <Text style={[type.micro, { color: brand.myraMid }]}>TRENDING</Text>
             </View>
           )}
           <Text style={[type.bodyStrong, { color: colors.textPrimary }]} numberOfLines={1}>

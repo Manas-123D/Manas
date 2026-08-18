@@ -1,13 +1,13 @@
-// NexServ's brand system: deep "night companion" navy as the anchor, a warm
-// signal gradient reserved for Myra so she always reads as distinct from the
-// four service colors. Myra's gradient is a 3-stop cyan -> violet -> coral,
-// matching her mark (see MyraMark.tsx): brand.myraStart/myraEnd stay as the
-// 2-stop fallback used by older call sites; gradients.myra is the full
-// 3-stop version used everywhere Myra's identity should show in full.
+// NexServ's brand system: deep "night companion" navy as the anchor. Myra's
+// identity is a cool cyan -> violet -> magenta gradient (no warm tones -
+// those are reserved for the food service color so Myra never reads as
+// "orange"), matching her mark (see MyraOrb.tsx). brand.myraStart/myraMid/
+// myraEnd are the 3 stops; gradients.myra is the same 3 colors as an array
+// for LinearGradient call sites.
 export const brand = {
-  myraStart: "#7C6CF6",
-  myraMid: "#38BDF8",
-  myraEnd: "#FF7A59",
+  myraStart: "#38BDF8",
+  myraMid: "#7C6CF6",
+  myraEnd: "#B565F0",
   ride: "#2FB3A3",
   food: "#FF8A3D",
   meds: "#3D8BFF",
@@ -18,7 +18,7 @@ export const brand = {
 // glyphs, glows and selected states so every surface reads richer than a
 // single flat fill.
 export const gradients = {
-  myra: ["#38BDF8", "#8B5CF6", "#FF7A59"] as const,
+  myra: [brand.myraStart, brand.myraMid, brand.myraEnd] as const,
   ride: ["#3BD6C6", "#1D8577"] as const,
   food: ["#FFB25E", "#FF6A3D"] as const,
   meds: ["#5FA8FF", "#3D5FFF"] as const,
