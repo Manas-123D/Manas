@@ -21,7 +21,8 @@ extended toward a genuine multi-city launch.
 nexserv/
 ├── packages/shared/    TypeScript domain types shared by API and app
 ├── services/api/       Express + Prisma backend, including Myra's intelligence layer
-└── apps/mobile/        Expo (React Native + TypeScript) app
+├── apps/mobile/        Expo (React Native + TypeScript) app
+└── apps/web/           Marketing site (Vite + React + TypeScript) — nexserv.com, not the product app
 ```
 
 ### Myra, concretely
@@ -67,6 +68,10 @@ npm run dev                          # http://localhost:4000
 cd apps/mobile
 npm install
 EXPO_PUBLIC_API_URL=http://<your-ip>:4000 npm run start
+
+# 3. Marketing site (separate terminal, optional — no backend dependency)
+cd apps/web
+npm run dev                          # http://localhost:5173
 ```
 
 Demo login: `demo@nexserv.app` / `password123`.

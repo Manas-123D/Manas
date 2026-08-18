@@ -1,0 +1,68 @@
+.glow-orb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.glow-orb-core {
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+.glow-orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glow-orb.ripple .glow-orb-ring {
+  animation: ripple-out 3.6s ease-out infinite;
+}
+
+.glow-orb.ripple .glow-orb-ring.r2 {
+  animation-delay: 1.2s;
+}
+
+.glow-orb.ripple .glow-orb-ring.r3 {
+  animation-delay: 2.4s;
+}
+
+@keyframes ripple-out {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.glow-orb.orbit .glow-orb-ring {
+  animation: spin-slow 14s linear infinite;
+  border-color: rgba(255, 255, 255, 0.16);
+  border-style: dashed;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.glow-orb-satellite {
+  position: absolute;
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-orb.ripple .glow-orb-ring,
+  .glow-orb.orbit .glow-orb-ring {
+    animation: none;
+  }
+}
