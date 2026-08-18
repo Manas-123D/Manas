@@ -15,6 +15,7 @@ export const TEAM: TeamMember[] = [
     bio: "Sets the product vision and drives where NexServ goes next — from the first line of code to the roadmap ahead.",
     initials: "MD",
     colors: ["#38BDF8", "#B565F0"],
+    photoUrl: "/team/manas.jpg",
   },
   {
     name: "Ayyappa Teegela",
@@ -22,6 +23,7 @@ export const TEAM: TeamMember[] = [
     bio: "Owns the technology behind every service — the platform, Myra's intelligence, and the systems that keep it all reliable.",
     initials: "AT",
     colors: ["#3D5FFF", "#5FA8FF"],
+    photoUrl: "/team/ayyappa.jpg",
   },
   {
     name: "Chandu Guntupalli",
@@ -29,5 +31,6 @@ export const TEAM: TeamMember[] = [
     bio: "Runs the day-to-day — partners, operations and making sure every ride, order and visit shows up on time.",
     initials: "CG",
     colors: ["#1D8577", "#3BD6C6"],
+    photoUrl: "/team/chandu.jpg",
   },
 ];
