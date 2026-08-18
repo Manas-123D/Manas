@@ -39,7 +39,13 @@ export function TrackingScreen() {
     async function poll() {
       try {
         const res = await apiRequest<{ tracking: TrackingState }>(TRACK_PATH[kind](id));
-        if (!cancelled) setTracking(res.tracking);
+        if (cancelled) return;
+        setTracking(res.tracking);
+        // Terminal states never change again (e.g. viewing an old order from
+        // history) - stop polling instead of hitting the endpoint forever.
+        if ((res.tracking.status === "completed" || res.tracking.status === "delivered") && pollRef.current) {
+          clearInterval(pollRef.current);
+        }
       } catch {
         // Best-effort: a missed poll just waits for the next tick.
       }

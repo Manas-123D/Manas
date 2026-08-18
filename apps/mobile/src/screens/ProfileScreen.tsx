@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../components/Screen";
@@ -16,6 +17,7 @@ function memberSince(iso?: string): string {
 
 export function ProfileScreen() {
   const { colors, spacing, radius, type, shadow, isDark } = useTheme();
+  const navigation = useNavigation<any>();
   const { user, logout } = useAuth();
   const initial = user?.name?.[0]?.toUpperCase() ?? "?";
   const [bookingCount, setBookingCount] = useState<number | null>(null);
@@ -85,6 +87,18 @@ export function ProfileScreen() {
           ))}
         </View>
       </GlassCard>
+
+      <Pressable onPress={() => navigation.navigate("History")}>
+        <GlassCard>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+            <View style={{ width: 32, height: 32, borderRadius: radius.sm, backgroundColor: brand.ride + (isDark ? "26" : "1a"), alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="receipt-outline" size={16} color={brand.ride} />
+            </View>
+            <Text style={[type.bodyStrong, { color: colors.textPrimary, flex: 1 }]}>My Bookings</Text>
+            <Ionicons name="chevron-forward" size={18} color={colors.textMuted} />
+          </View>
+        </GlassCard>
+      </Pressable>
 
       <GlassCard>
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>

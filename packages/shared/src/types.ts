@@ -78,11 +78,15 @@ export interface RideOption {
   surge: number;
 }
 
+// Matches the flat lat/lng columns Prisma actually stores (see RideRequest
+// in schema.prisma) - there's no origin/destination label persisted server-side.
 export interface RideRequest {
   id: string;
   userId: string;
-  pickup: GeoPoint;
-  dropoff: GeoPoint;
+  pickupLat: number;
+  pickupLng: number;
+  dropoffLat: number;
+  dropoffLng: number;
   vehicleType: RideVehicleType;
   status: RideStatus;
   priceEstimate: number;
