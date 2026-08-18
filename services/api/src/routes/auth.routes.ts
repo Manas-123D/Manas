@@ -6,9 +6,13 @@ import { AuthedRequest, requireAuth, signToken } from "../middleware/auth";
 
 export const authRouter = Router();
 
+function toPublicUser(user: { id: string; name: string; email: string; city: string; createdAt: Date }) {
+  return { id: user.id, name: user.name, email: user.email, city: user.city, createdAt: user.createdAt };
+}
+
 authRouter.get("/me", requireAuth, async (req: AuthedRequest, res) => {
   const user = await prisma.user.findUniqueOrThrow({ where: { id: req.userId! } });
-  res.json({ user: { id: user.id, name: user.name, email: user.email, city: user.city } });
+  res.json({ user: toPublicUser(user) });
 });
 
 const signupSchema = z.object({
@@ -30,7 +34,7 @@ authRouter.post("/signup", async (req, res) => {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({ data: { name, email, passwordHash, city, phone } });
 
-  res.status(201).json({ token: signToken(user.id), user: { id: user.id, name: user.name, email: user.email, city: user.city } });
+  res.status(201).json({ token: signToken(user.id), user: toPublicUser(user) });
 });
 
 const loginSchema = z.object({ email: z.string().email(), password: z.string() });
@@ -46,5 +50,5 @@ authRouter.post("/login", async (req, res) => {
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) return res.status(401).json({ error: "Invalid credentials" });
 
-  res.json({ token: signToken(user.id), user: { id: user.id, name: user.name, email: user.email, city: user.city } });
+  res.json({ token: signToken(user.id), user: toPublicUser(user) });
 });

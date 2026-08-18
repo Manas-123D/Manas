@@ -6,6 +6,7 @@ interface AuthUser {
   name: string;
   email: string;
   city: string;
+  createdAt: string;
 }
 
 interface AuthContextValue {
