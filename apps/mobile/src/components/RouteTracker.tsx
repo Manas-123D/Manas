@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { TrackingKind } from "@nexserv/shared";
 import { useTheme, brand } from "../theme";
 
-const KIND_MARKER: Record<TrackingKind, string> = { ride: "🚗", food: "🛵", meds: "💊" };
+const KIND_MARKER: Record<TrackingKind, keyof typeof Ionicons.glyphMap> = { ride: "car-sport", food: "bicycle", meds: "medkit" };
 const KIND_COLOR: Record<TrackingKind, string> = { ride: brand.ride, food: brand.food, meds: brand.meds };
 
 interface RouteTrackerProps {
@@ -61,7 +62,7 @@ export function RouteTracker({ kind, progress, originLabel, destinationLabel }: 
         <Animated.View style={[styles.markerWrap, { left: markerLeft }]}>
           <Animated.View style={[styles.markerPulse, { backgroundColor: color + "33", transform: [{ scale: pulse }] }]} />
           <View style={[styles.marker, { backgroundColor: color }]}>
-            <Text style={styles.markerEmoji}>{KIND_MARKER[kind]}</Text>
+            <Ionicons name={KIND_MARKER[kind]} size={17} color="#fff" />
           </View>
         </Animated.View>
       </View>
@@ -89,5 +90,4 @@ const styles = StyleSheet.create({
   markerWrap: { position: "absolute", top: 0, marginLeft: -18, alignItems: "center", justifyContent: "center" },
   markerPulse: { position: "absolute", width: 40, height: 40, borderRadius: 20 },
   marker: { width: 36, height: 36, borderRadius: 18, alignItems: "center", justifyContent: "center" },
-  markerEmoji: { fontSize: 18 },
 });

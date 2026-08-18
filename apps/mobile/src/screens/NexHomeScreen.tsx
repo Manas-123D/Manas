@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { HomeServiceCategory } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
 import { AmbientBackground } from "../components/AmbientBackground";
@@ -12,12 +13,12 @@ import { PrimaryButton } from "../components/PrimaryButton";
 import { useTheme, brand, gradients } from "../theme";
 import { apiRequest } from "../api/client";
 
-const CATEGORIES: { key: HomeServiceCategory; label: string; emoji: string }[] = [
-  { key: "electrician", label: "Electrician", emoji: "⚡" },
-  { key: "plumber", label: "Plumber", emoji: "🔧" },
-  { key: "ac_technician", label: "AC Technician", emoji: "❄️" },
-  { key: "cleaning", label: "Cleaning", emoji: "🧹" },
-  { key: "appliance_repair", label: "Appliance Repair", emoji: "🛠️" },
+const CATEGORIES: { key: HomeServiceCategory; label: string; icon: React.ReactNode }[] = [
+  { key: "electrician", label: "Electrician", icon: <Ionicons name="flash" size={20} color="#fff" /> },
+  { key: "plumber", label: "Plumber", icon: <MaterialCommunityIcons name="pipe-wrench" size={20} color="#fff" /> },
+  { key: "ac_technician", label: "AC Technician", icon: <Ionicons name="snow" size={20} color="#fff" /> },
+  { key: "cleaning", label: "Cleaning", icon: <MaterialCommunityIcons name="broom" size={20} color="#fff" /> },
+  { key: "appliance_repair", label: "Appliance Repair", icon: <Ionicons name="build" size={20} color="#fff" /> },
 ];
 
 export function NexHomeScreen() {
@@ -75,7 +76,7 @@ export function NexHomeScreen() {
                     end={{ x: 0.9, y: 1 }}
                     style={[styles.iconWrap, { borderRadius: radius.md }]}
                   >
-                    <Text style={{ fontSize: 20 }}>{c.emoji}</Text>
+                    {c.icon}
                   </LinearGradient>
                   <Text style={[type.caption, { color: colors.textPrimary, marginTop: spacing.sm, fontWeight: "700" }]}>{c.label}</Text>
                 </GlassCard>

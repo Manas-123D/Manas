@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import { MyraInsight, MyraInsightAction, Restaurant } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
 import { MyraHeroBanner } from "../components/MyraHeroBanner";
@@ -11,11 +12,11 @@ import { useTheme, gradients } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { apiRequest } from "../api/client";
 
-const SERVICES: { label: string; emoji: string; colorPair: readonly [string, string]; screen: string }[] = [
-  { label: "NexRide", emoji: "🚕", colorPair: gradients.ride, screen: "NexRide" },
-  { label: "NexFood", emoji: "🍔", colorPair: gradients.food, screen: "NexFood" },
-  { label: "NexMeds", emoji: "💊", colorPair: gradients.meds, screen: "NexMeds" },
-  { label: "NexHome", emoji: "🏠", colorPair: gradients.home, screen: "NexHome" },
+const SERVICES: { label: string; icon: keyof typeof Ionicons.glyphMap; colorPair: readonly [string, string]; screen: string }[] = [
+  { label: "NexRide", icon: "car-sport", colorPair: gradients.ride, screen: "NexRide" },
+  { label: "NexFood", icon: "restaurant", colorPair: gradients.food, screen: "NexFood" },
+  { label: "NexMeds", icon: "medkit", colorPair: gradients.meds, screen: "NexMeds" },
+  { label: "NexHome", icon: "construct", colorPair: gradients.home, screen: "NexHome" },
 ];
 
 function greetingForHour(hour: number): string {
@@ -110,7 +111,7 @@ export function HomeScreen() {
           <Text style={[type.subtitle, { color: colors.textPrimary }]}>Services</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.md }}>
             {SERVICES.map((s) => (
-              <ServiceTile key={s.label} label={s.label} emoji={s.emoji} colorPair={s.colorPair} onPress={() => navigation.navigate(s.screen)} />
+              <ServiceTile key={s.label} label={s.label} icon={s.icon} colorPair={s.colorPair} onPress={() => navigation.navigate(s.screen)} />
             ))}
           </View>
         </View>

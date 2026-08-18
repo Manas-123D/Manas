@@ -20,7 +20,7 @@ export function AmbientBackground() {
 }
 
 const styles = StyleSheet.create({
-  blob: { position: "absolute", width: 380, height: 380, borderRadius: 380, opacity: 0.28 },
+  blob: { position: "absolute", width: 380, height: 380, borderRadius: 380, opacity: 0.16 },
   blobA: { top: -160, left: -120 },
   blobB: { top: 320, right: -180 },
 });

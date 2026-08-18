@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../components/Screen";
 import { GlassCard } from "../components/GlassCard";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -88,7 +89,7 @@ export function ProfileScreen() {
       <GlassCard>
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
           <View style={{ width: 32, height: 32, borderRadius: radius.sm, backgroundColor: brand.myraStart + (isDark ? "26" : "1a"), alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ fontSize: 16 }}>🧠</Text>
+            <Ionicons name="bulb-outline" size={16} color={brand.myraStart} />
           </View>
           <Text style={[type.bodyStrong, { color: colors.textPrimary }]}>What Myra remembers</Text>
         </View>

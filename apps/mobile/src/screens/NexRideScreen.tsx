@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { RideOption, RideVehicleType } from "@nexserv/shared";
 import { AmbientBackground } from "../components/AmbientBackground";
 import { GlassCard } from "../components/GlassCard";
@@ -17,7 +18,13 @@ const PICKUP = { lat: 17.4401, lng: 78.3489, label: "Home" };
 const DROPOFF = { lat: 17.4483, lng: 78.3915, label: "Work" };
 
 const VEHICLE_LABEL: Record<RideVehicleType, string> = { bike: "Bike", auto: "Auto", cab: "Cab", pool: "Pool" };
-const VEHICLE_EMOJI: Record<RideVehicleType, string> = { bike: "🏍️", auto: "🛺", cab: "🚗", pool: "👥" };
+
+function VehicleIcon({ vehicleType, color, size }: { vehicleType: RideVehicleType; color: string; size: number }) {
+  if (vehicleType === "bike") return <MaterialCommunityIcons name="motorbike" size={size} color={color} />;
+  if (vehicleType === "auto") return <MaterialCommunityIcons name="rickshaw" size={size} color={color} />;
+  if (vehicleType === "pool") return <Ionicons name="people" size={size} color={color} />;
+  return <Ionicons name="car-sport" size={size} color={color} />;
+}
 
 export function NexRideScreen() {
   const { colors, spacing, radius, type, isDark } = useTheme();
@@ -80,7 +87,7 @@ export function NexRideScreen() {
                         end={{ x: 0.9, y: 1 }}
                         style={[styles.iconWrap, { borderRadius: radius.md }]}
                       >
-                        <Text style={{ fontSize: 22 }}>{VEHICLE_EMOJI[o.vehicleType]}</Text>
+                        <VehicleIcon vehicleType={o.vehicleType} color="#fff" size={22} />
                       </LinearGradient>
                       <View>
                         <Text style={[type.bodyStrong, { color: colors.textPrimary }]}>{VEHICLE_LABEL[o.vehicleType]}</Text>

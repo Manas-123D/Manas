@@ -1,18 +1,19 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../theme";
 import { GlassCard } from "./GlassCard";
 import { PressableScale } from "./PressableScale";
 
 interface ServiceTileProps {
   label: string;
-  emoji: string;
+  icon: keyof typeof Ionicons.glyphMap;
   colorPair: readonly [string, string];
   onPress: () => void;
 }
 
-export function ServiceTile({ label, emoji, colorPair, onPress }: ServiceTileProps) {
+export function ServiceTile({ label, icon, colorPair, onPress }: ServiceTileProps) {
   const { colors, spacing, radius, type, shadow } = useTheme();
 
   return (
@@ -22,9 +23,9 @@ export function ServiceTile({ label, emoji, colorPair, onPress }: ServiceTilePro
           colors={colorPair}
           start={{ x: 0.15, y: 0.1 }}
           end={{ x: 0.9, y: 1 }}
-          style={[styles.iconWrap, { borderRadius: radius.md }, shadow.glow(colorPair[1], 0.35)]}
+          style={[styles.iconWrap, { borderRadius: radius.md }, shadow.soft]}
         >
-          <Text style={{ fontSize: 22 }}>{emoji}</Text>
+          <Ionicons name={icon} size={22} color="#fff" />
         </LinearGradient>
         <Text style={[type.bodyStrong, { color: colors.textPrimary, marginTop: spacing.sm }]}>{label}</Text>
       </GlassCard>

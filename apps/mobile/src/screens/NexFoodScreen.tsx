@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { Restaurant } from "@nexserv/shared";
 import { AmbientBackground } from "../components/AmbientBackground";
 import { GlassCard } from "../components/GlassCard";
@@ -72,12 +73,14 @@ export function NexFoodScreen() {
               <LinearGradient colors={cover} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cover}>
                 <Text style={styles.coverEmoji}>{coverEmoji(r.cuisine)}</Text>
                 {r.trending && (
-                  <View style={[styles.badge, styles.badgeLeft, { backgroundColor: "rgba(0,0,0,0.35)", borderRadius: radius.pill }]}>
-                    <Text style={[type.micro, { color: "#fff" }]}>🔥 TRENDING</Text>
+                  <View style={[styles.badge, styles.badgeLeft, styles.badgeRow, { backgroundColor: "rgba(0,0,0,0.35)", borderRadius: radius.pill }]}>
+                    <Ionicons name="flame" size={11} color="#FFB25E" />
+                    <Text style={[type.micro, { color: "#fff" }]}>TRENDING</Text>
                   </View>
                 )}
-                <View style={[styles.badge, styles.badgeRight, { backgroundColor: "rgba(0,0,0,0.35)", borderRadius: radius.pill }]}>
-                  <Text style={[type.micro, { color: "#fff" }]}>★ {r.rating}</Text>
+                <View style={[styles.badge, styles.badgeRight, styles.badgeRow, { backgroundColor: "rgba(0,0,0,0.35)", borderRadius: radius.pill }]}>
+                  <Ionicons name="star" size={11} color="#FFC24B" />
+                  <Text style={[type.micro, { color: "#fff" }]}>{r.rating}</Text>
                 </View>
               </LinearGradient>
 
@@ -144,7 +147,7 @@ export function NexFoodScreen() {
                               justifyContent: "center",
                             }}
                           >
-                            {isSelected && <Text style={{ color: "#fff", fontSize: 11, fontWeight: "800" }}>✓</Text>}
+                            {isSelected && <Ionicons name="checkmark" size={13} color="#fff" />}
                           </View>
                         </View>
                       </Pressable>
@@ -179,6 +182,7 @@ const styles = StyleSheet.create({
   cover: { height: 110, alignItems: "center", justifyContent: "center" },
   coverEmoji: { fontSize: 40 },
   badge: { position: "absolute", top: 10, paddingHorizontal: 10, paddingVertical: 4 },
+  badgeRow: { flexDirection: "row", alignItems: "center", gap: 4 },
   badgeLeft: { left: 10 },
   badgeRight: { right: 10 },
   stickyWrap: { position: "absolute", left: 0, right: 0, bottom: 0, overflow: "hidden" },

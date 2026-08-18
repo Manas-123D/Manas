@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { Restaurant } from "@nexserv/shared";
 import { useTheme, brand } from "../theme";
 import { GlassCard } from "./GlassCard";
@@ -15,8 +15,9 @@ export function TrendingCard({ restaurant, onPress }: { restaurant: Restaurant; 
         {!restaurant.trending && <View style={[styles.accentBar, { backgroundColor: colors.glassBorder }]} />}
         <View style={{ padding: spacing.md }}>
           {restaurant.trending && (
-            <View style={[styles.badge, { backgroundColor: brand.food + "22", borderRadius: radius.pill, marginBottom: spacing.xs }]}>
-              <Text style={[type.micro, { color: brand.food }]}>🔥 TRENDING</Text>
+            <View style={[styles.badge, styles.badgeRow, { backgroundColor: brand.food + "22", borderRadius: radius.pill, marginBottom: spacing.xs }]}>
+              <Ionicons name="flame" size={11} color={brand.food} />
+              <Text style={[type.micro, { color: brand.food }]}>TRENDING</Text>
             </View>
           )}
           <Text style={[type.bodyStrong, { color: colors.textPrimary }]} numberOfLines={1}>
@@ -26,7 +27,10 @@ export function TrendingCard({ restaurant, onPress }: { restaurant: Restaurant; 
             {restaurant.cuisine.join(" · ")}
           </Text>
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: spacing.sm }}>
-            <Text style={[type.caption, { color: colors.textSecondary }]}>★ {restaurant.rating} · {restaurant.distanceKm}km</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+              <Ionicons name="star" size={12} color="#FFC24B" />
+              <Text style={[type.caption, { color: colors.textSecondary }]}>{restaurant.rating} · {restaurant.distanceKm}km</Text>
+            </View>
             <Text style={[type.caption, { color: colors.textMuted }]}>{restaurant.etaMinutes} min</Text>
           </View>
           {restaurant.offer && (
@@ -43,4 +47,5 @@ export function TrendingCard({ restaurant, onPress }: { restaurant: Restaurant; 
 const styles = StyleSheet.create({
   accentBar: { height: 4 },
   badge: { alignSelf: "flex-start", paddingHorizontal: 8, paddingVertical: 2 },
+  badgeRow: { flexDirection: "row", alignItems: "center", gap: 4 },
 });

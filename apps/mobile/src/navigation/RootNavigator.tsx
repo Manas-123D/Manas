@@ -1,9 +1,10 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { NavigationContainer, DarkTheme, DefaultTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BlurView } from "expo-blur";
+import { Ionicons } from "@expo/vector-icons";
 import { useTheme, brand } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { OnboardingScreen } from "../screens/OnboardingScreen";
@@ -19,10 +20,15 @@ import { TrackingScreen } from "../screens/TrackingScreen";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const TAB_ICON: Record<string, string> = {
-  Home: "🏡",
-  MyraChat: "✨",
-  Profile: "👤",
+const TAB_ICON: Record<string, keyof typeof Ionicons.glyphMap> = {
+  Home: "home",
+  MyraChat: "sparkles",
+  Profile: "person-circle",
+};
+const TAB_ICON_INACTIVE: Record<string, keyof typeof Ionicons.glyphMap> = {
+  Home: "home-outline",
+  MyraChat: "sparkles-outline",
+  Profile: "person-circle-outline",
 };
 
 function MainTabs() {
@@ -43,7 +49,11 @@ function MainTabs() {
               focused && { backgroundColor: brand.myraStart + (isDark ? "26" : "1a") },
             ]}
           >
-            <Text style={{ fontSize: 18 }}>{TAB_ICON[route.name]}</Text>
+            <Ionicons
+              name={focused ? TAB_ICON[route.name] : TAB_ICON_INACTIVE[route.name]}
+              size={21}
+              color={focused ? brand.myraStart : colors.textMuted}
+            />
           </View>
         ),
       })}

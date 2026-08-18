@@ -10,7 +10,7 @@ interface GlassCardProps {
   padding?: number;
   raised?: boolean;
   radius?: number;
-  /** Tint the border + add a colored glow, e.g. for a selected list row. */
+  /** Tint the border + fill, e.g. for a selected list row. Deliberately no glow - selection reads from fill/border, not a blurred halo. */
   accentColor?: string;
   /** A thin gradient ring instead of a flat border - reserved for hero-level cards (profile, standout states). */
   gradientBorder?: readonly [string, string];
@@ -26,7 +26,7 @@ interface GlassCardProps {
 export function GlassCard({ children, style, padding, raised, radius: radiusOverride, accentColor, gradientBorder }: GlassCardProps) {
   const { colors, radius, spacing, isDark, shadow } = useTheme();
   const r = radiusOverride ?? radius.lg;
-  const outerShadow = accentColor || gradientBorder ? shadow.glow(accentColor ?? gradientBorder![0], 0.32) : shadow.soft;
+  const outerShadow = gradientBorder ? shadow.glow(gradientBorder[0], 0.32) : shadow.soft;
   const pad = padding ?? spacing.lg;
 
   const sheen = (
@@ -48,7 +48,7 @@ export function GlassCard({ children, style, padding, raised, radius: radiusOver
           borderWidth: gradientBorder ? 0 : accentColor ? 1.5 : 1,
           borderColor: accentColor ?? colors.glassBorder,
           borderTopColor: accentColor ?? colors.glassHighlight,
-          backgroundColor: raised ? colors.glassRaised : colors.glass,
+          backgroundColor: accentColor ? accentColor + (isDark ? "17" : "0d") : raised ? colors.glassRaised : colors.glass,
         }}
       >
         {sheen}
