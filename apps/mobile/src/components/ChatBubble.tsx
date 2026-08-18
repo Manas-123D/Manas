@@ -3,7 +3,7 @@ import { Animated, Easing, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { ChatMessage } from "@nexserv/shared";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 import { MyraOrb } from "./MyraOrb";
 
 export function ChatBubble({ message }: { message: ChatMessage }) {
@@ -49,7 +49,7 @@ export function ChatBubble({ message }: { message: ChatMessage }) {
   return (
     <Animated.View style={[styles.row, { justifyContent: "flex-end", opacity: entrance, transform: [{ translateY }, { translateX }] }]}>
       <LinearGradient
-        colors={[brand.myraStart, brand.myraEnd]}
+        colors={gradients.myra}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={[styles.bubble, styles.userBubble, { borderRadius: radius.lg, borderTopRightRadius: 4, padding: spacing.md }]}

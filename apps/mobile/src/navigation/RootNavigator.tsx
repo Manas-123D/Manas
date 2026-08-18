@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
+import { MyraOrb } from "../components/MyraOrb";
 import { useTheme, brand } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { OnboardingScreen } from "../screens/OnboardingScreen";
@@ -22,12 +23,10 @@ const Stack = createNativeStackNavigator();
 
 const TAB_ICON: Record<string, keyof typeof Ionicons.glyphMap> = {
   Home: "home",
-  MyraChat: "sparkles",
   Profile: "person-circle",
 };
 const TAB_ICON_INACTIVE: Record<string, keyof typeof Ionicons.glyphMap> = {
   Home: "home-outline",
-  MyraChat: "sparkles-outline",
   Profile: "person-circle-outline",
 };
 
@@ -49,11 +48,17 @@ function MainTabs() {
               focused && { backgroundColor: brand.myraStart + (isDark ? "26" : "1a") },
             ]}
           >
-            <Ionicons
-              name={focused ? TAB_ICON[route.name] : TAB_ICON_INACTIVE[route.name]}
-              size={21}
-              color={focused ? brand.myraStart : colors.textMuted}
-            />
+            {route.name === "MyraChat" ? (
+              <View style={{ opacity: focused ? 1 : 0.55 }}>
+                <MyraOrb size={22} active={false} />
+              </View>
+            ) : (
+              <Ionicons
+                name={focused ? TAB_ICON[route.name] : TAB_ICON_INACTIVE[route.name]}
+                size={21}
+                color={focused ? brand.myraStart : colors.textMuted}
+              />
+            )}
           </View>
         ),
       })}

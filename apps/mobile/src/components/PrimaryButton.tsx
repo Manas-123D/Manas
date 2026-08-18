@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { ActivityIndicator, Animated, Pressable, StyleSheet, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 
 interface PrimaryButtonProps {
   label: string;
@@ -49,10 +49,10 @@ export function PrimaryButton({ label, onPress, loading, disabled, variant = "my
   }
 
   return (
-    <Animated.View style={[{ transform: [{ scale }], borderRadius: radius.pill }, shadow.glow(brand.myraStart, 0.4), { opacity: isDisabled ? 0.6 : 1 }]}>
+    <Animated.View style={[{ transform: [{ scale }], borderRadius: radius.pill }, shadow.glow(brand.myraMid, 0.4), { opacity: isDisabled ? 0.6 : 1 }]}>
       <Pressable onPress={onPress} onPressIn={pressIn} onPressOut={pressOut} disabled={isDisabled}>
         <LinearGradient
-          colors={[brand.myraStart, brand.myraEnd]}
+          colors={gradients.myra}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[styles.base, { borderRadius: radius.pill, paddingVertical: spacing.md }]}

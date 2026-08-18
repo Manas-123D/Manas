@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../components/Screen";
 import { GlassCard } from "../components/GlassCard";
 import { PrimaryButton } from "../components/PrimaryButton";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { apiRequest } from "../api/client";
 
@@ -41,13 +41,13 @@ export function ProfileScreen() {
     <Screen>
       <Text style={[type.title, { color: colors.textPrimary }]}>Profile</Text>
 
-      <GlassCard gradientBorder={[brand.myraStart, brand.myraEnd]} raised>
+      <GlassCard gradientBorder={gradients.myra} raised>
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.lg }}>
-          <View style={[{ borderRadius: 42 }, shadow.glow(brand.myraStart, 0.5)]}>
-            <LinearGradient colors={[brand.myraStart, brand.myraEnd]} style={{ width: 84, height: 84, borderRadius: 42, alignItems: "center", justifyContent: "center", padding: 3 }}>
+          <View style={[{ borderRadius: 42 }, shadow.glow(brand.myraMid, 0.5)]}>
+            <LinearGradient colors={gradients.myra} style={{ width: 84, height: 84, borderRadius: 42, alignItems: "center", justifyContent: "center", padding: 3 }}>
               <View style={{ width: 78, height: 78, borderRadius: 39, backgroundColor: colors.background, alignItems: "center", justifyContent: "center" }}>
                 <LinearGradient
-                  colors={[brand.myraStart, brand.myraEnd]}
+                  colors={gradients.myra}
                   start={{ x: 0.15, y: 0.1 }}
                   end={{ x: 0.9, y: 1 }}
                   style={{ width: 68, height: 68, borderRadius: 34, alignItems: "center", justifyContent: "center" }}

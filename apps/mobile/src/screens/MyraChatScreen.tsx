@@ -9,7 +9,7 @@ import { TypingIndicator } from "../components/TypingIndicator";
 import { SuggestionChip } from "../components/SuggestionChip";
 import { MyraOrb } from "../components/MyraOrb";
 import { AmbientBackground } from "../components/AmbientBackground";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 import { apiRequest } from "../api/client";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -123,10 +123,10 @@ export function MyraChatScreen() {
               onSubmitEditing={() => send(input)}
               returnKeyType="send"
             />
-            <View style={[{ borderRadius: radius.pill }, shadow.glow(brand.myraStart, 0.45)]}>
+            <View style={[{ borderRadius: radius.pill }, shadow.glow(brand.myraMid, 0.45)]}>
               <Pressable onPress={() => send(input)} disabled={sending}>
                 <LinearGradient
-                  colors={[brand.myraStart, brand.myraEnd]}
+                  colors={gradients.myra}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={[styles.sendBtn, { borderRadius: radius.pill, opacity: sending ? 0.6 : 1 }]}

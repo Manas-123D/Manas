@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Screen } from "../components/Screen";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { MyraOrb } from "../components/MyraOrb";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { ApiError } from "../api/client";
 
@@ -39,8 +39,8 @@ export function OnboardingScreen() {
 
   return (
     <Screen scroll={false} style={{ flex: 1, justifyContent: "center" }}>
-      <View style={[{ borderRadius: radius.lg, alignSelf: "flex-start" }, shadow.glow(brand.myraStart, 0.5)]}>
-        <LinearGradient colors={[brand.myraStart, brand.myraEnd]} style={[styles.mark, { borderRadius: radius.lg }]}>
+      <View style={[{ borderRadius: radius.lg, alignSelf: "flex-start" }, shadow.glow(brand.myraMid, 0.5)]}>
+        <LinearGradient colors={gradients.myra} style={[styles.mark, { borderRadius: radius.lg }]}>
           <Text style={styles.markText}>N</Text>
         </LinearGradient>
       </View>

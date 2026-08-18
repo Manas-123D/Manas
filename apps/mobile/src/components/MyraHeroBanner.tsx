@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MyraInsight } from "@nexserv/shared";
-import { useTheme, brand } from "../theme";
+import { useTheme, brand, gradients } from "../theme";
 import { MyraOrb } from "./MyraOrb";
 
 interface MyraHeroBannerProps {
@@ -26,10 +26,10 @@ export function MyraHeroBanner({ insight, extraCount, onAct, onDismiss, onOpenCh
   const translateY = entrance.interpolate({ inputRange: [0, 1], outputRange: [14, 0] });
 
   return (
-    <Animated.View style={{ opacity: entrance, transform: [{ translateY }], borderRadius: radius.lg, ...shadow.glow(brand.myraStart, 0.5) }}>
+    <Animated.View style={{ opacity: entrance, transform: [{ translateY }], borderRadius: radius.lg, ...shadow.glow(brand.myraMid, 0.5) }}>
       <Pressable onPress={onOpenChat}>
         <LinearGradient
-          colors={[brand.myraStart, brand.myraEnd]}
+          colors={gradients.myra}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[styles.card, { borderRadius: radius.lg, padding: spacing.lg }]}

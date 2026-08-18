@@ -13,7 +13,7 @@ interface GlassCardProps {
   /** Tint the border + fill, e.g. for a selected list row. Deliberately no glow - selection reads from fill/border, not a blurred halo. */
   accentColor?: string;
   /** A thin gradient ring instead of a flat border - reserved for hero-level cards (profile, standout states). */
-  gradientBorder?: readonly [string, string];
+  gradientBorder?: readonly string[];
 }
 
 /**

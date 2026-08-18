@@ -1,9 +1,12 @@
 // NexServ's brand system: deep "night companion" navy as the anchor, a warm
-// signal gradient (violet -> coral) reserved for Myra so she always reads as
-// distinct from the four service colors.
-
+// signal gradient reserved for Myra so she always reads as distinct from the
+// four service colors. Myra's gradient is a 3-stop cyan -> violet -> coral,
+// matching her mark (see MyraMark.tsx): brand.myraStart/myraEnd stay as the
+// 2-stop fallback used by older call sites; gradients.myra is the full
+// 3-stop version used everywhere Myra's identity should show in full.
 export const brand = {
   myraStart: "#7C6CF6",
+  myraMid: "#38BDF8",
   myraEnd: "#FF7A59",
   ride: "#2FB3A3",
   food: "#FF8A3D",
@@ -11,10 +14,11 @@ export const brand = {
   home: "#9B6BFF",
 };
 
-// Two-tone gradients per accent, used on icon glyphs, glows and selected
-// states so every surface reads richer than a single flat fill.
+// Two-tone (or three-tone, for Myra) gradients per accent, used on icon
+// glyphs, glows and selected states so every surface reads richer than a
+// single flat fill.
 export const gradients = {
-  myra: [brand.myraStart, brand.myraEnd] as const,
+  myra: ["#38BDF8", "#8B5CF6", "#FF7A59"] as const,
   ride: ["#3BD6C6", "#1D8577"] as const,
   food: ["#FFB25E", "#FF6A3D"] as const,
   meds: ["#5FA8FF", "#3D5FFF"] as const,
@@ -27,8 +31,8 @@ export const gradients = {
 // moments) rather than from ambient effects layered on every surface.
 export const dark = {
   background: "#050506",
-  backgroundGlowA: "#231a42",
-  backgroundGlowB: "#241019",
+  backgroundGlowA: "#1B2A6B",
+  backgroundGlowB: "#3A1740",
   surface: "#161618",
   surfaceRaised: "#1E1E21",
   border: "#2A2A2E",
