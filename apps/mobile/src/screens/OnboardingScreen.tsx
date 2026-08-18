@@ -3,12 +3,13 @@ import { Text, TextInput, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Screen } from "../components/Screen";
 import { PrimaryButton } from "../components/PrimaryButton";
+import { MyraOrb } from "../components/MyraOrb";
 import { useTheme, brand } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { ApiError } from "../api/client";
 
 export function OnboardingScreen() {
-  const { colors, spacing, radius, type } = useTheme();
+  const { colors, spacing, radius, type, shadow } = useTheme();
   const { login, signup } = useAuth();
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [name, setName] = useState("");
@@ -31,52 +32,52 @@ export function OnboardingScreen() {
     }
   }
 
+  const inputStyle = [
+    styles.input,
+    { backgroundColor: colors.glass, borderColor: colors.glassBorder, color: colors.textPrimary, borderRadius: radius.md, marginBottom: spacing.sm },
+  ];
+
   return (
     <Screen scroll={false} style={{ flex: 1, justifyContent: "center" }}>
-      <LinearGradient colors={[brand.myraStart, brand.myraEnd]} style={[styles.mark, { borderRadius: radius.lg }]}>
-        <Text style={styles.markText}>N</Text>
-      </LinearGradient>
+      <View style={[{ borderRadius: radius.lg, alignSelf: "flex-start" }, shadow.glow(brand.myraStart, 0.5)]}>
+        <LinearGradient colors={[brand.myraStart, brand.myraEnd]} style={[styles.mark, { borderRadius: radius.lg }]}>
+          <Text style={styles.markText}>N</Text>
+        </LinearGradient>
+      </View>
 
-      <Text style={[type.display, { color: colors.textPrimary, marginTop: spacing.lg }]}>NexServ</Text>
-      <Text style={[type.body, { color: colors.textSecondary, marginTop: spacing.xs, marginBottom: spacing.xl }]}>
-        One companion for mobility, food, medicines and home services — meet Myra.
-      </Text>
+      <Text style={[type.hero, { color: colors.textPrimary, marginTop: spacing.lg }]}>NexServ</Text>
+      <View style={styles.taglineRow}>
+        <MyraOrb size={16} />
+        <Text style={[type.body, { color: colors.textSecondary, flex: 1 }]}>
+          One companion for mobility, food, medicines and home services — meet Myra.
+        </Text>
+      </View>
 
-      {mode === "signup" && (
+      <View style={{ marginTop: spacing.xl }}>
+        {mode === "signup" && (
+          <TextInput value={name} onChangeText={setName} placeholder="Full name" placeholderTextColor={colors.textMuted} style={inputStyle} />
+        )}
         <TextInput
-          value={name}
-          onChangeText={setName}
-          placeholder="Full name"
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+          autoCapitalize="none"
+          keyboardType="email-address"
           placeholderTextColor={colors.textMuted}
-          style={[styles.input, { backgroundColor: colors.surface, borderColor: colors.border, color: colors.textPrimary, borderRadius: radius.md, marginBottom: spacing.sm }]}
+          style={inputStyle}
         />
-      )}
-      <TextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        placeholderTextColor={colors.textMuted}
-        style={[styles.input, { backgroundColor: colors.surface, borderColor: colors.border, color: colors.textPrimary, borderRadius: radius.md, marginBottom: spacing.sm }]}
-      />
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Password"
-        secureTextEntry
-        placeholderTextColor={colors.textMuted}
-        style={[styles.input, { backgroundColor: colors.surface, borderColor: colors.border, color: colors.textPrimary, borderRadius: radius.md, marginBottom: spacing.sm }]}
-      />
-      {mode === "signup" && (
         <TextInput
-          value={city}
-          onChangeText={setCity}
-          placeholder="City"
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          secureTextEntry
           placeholderTextColor={colors.textMuted}
-          style={[styles.input, { backgroundColor: colors.surface, borderColor: colors.border, color: colors.textPrimary, borderRadius: radius.md, marginBottom: spacing.sm }]}
+          style={inputStyle}
         />
-      )}
+        {mode === "signup" && (
+          <TextInput value={city} onChangeText={setCity} placeholder="City" placeholderTextColor={colors.textMuted} style={inputStyle} />
+        )}
+      </View>
 
       {error && <Text style={[type.caption, { color: colors.danger, marginBottom: spacing.sm }]}>{error}</Text>}
 
@@ -95,5 +96,6 @@ export function OnboardingScreen() {
 const styles = StyleSheet.create({
   mark: { width: 56, height: 56, alignItems: "center", justifyContent: "center" },
   markText: { color: "#fff", fontSize: 26, fontWeight: "800" },
+  taglineRow: { flexDirection: "row", alignItems: "center", gap: 10, marginTop: 10, marginBottom: 14 },
   input: { borderWidth: 1, paddingHorizontal: 16, paddingVertical: 14, fontSize: 15 },
 });

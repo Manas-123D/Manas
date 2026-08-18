@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { TrackingKind, TrackingState } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
+import { GlassCard } from "../components/GlassCard";
 import { RouteMap } from "../components/RouteMap";
 import { useTheme, brand } from "../theme";
 import { apiRequest } from "../api/client";
@@ -26,7 +27,7 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 export function TrackingScreen() {
-  const { colors, spacing, radius, type } = useTheme();
+  const { colors, spacing, type } = useTheme();
   const route = useRoute<any>();
   const { kind, id } = route.params as { kind: TrackingKind; id: string };
   const [tracking, setTracking] = useState<TrackingState | null>(null);
@@ -66,33 +67,35 @@ export function TrackingScreen() {
 
       {tracking && (
         <>
-          <View style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.lg }}>
-            <RouteMap
-              kind={kind}
-              progress={tracking.progress}
-              origin={tracking.origin}
-              destination={tracking.destination}
-              agentLocation={tracking.agentLocation}
-            />
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-              <View>
-                <Text style={[type.bodyStrong, { color: colors.textPrimary }]}>{tracking.agentName}</Text>
-                <Text style={[type.caption, { color: colors.textMuted }]}>
-                  {isDone ? "Arrived" : `${tracking.etaRemainingMinutes} min remaining`}
-                </Text>
-              </View>
-              <View style={{ backgroundColor: color + "22", paddingHorizontal: spacing.md, paddingVertical: spacing.xs, borderRadius: radius.pill }}>
-                <Text style={[type.caption, { color, fontWeight: "700" }]}>{Math.round(tracking.progress * 100)}%</Text>
+          <GlassCard accentColor={isDone ? color : undefined}>
+            <View style={{ gap: spacing.lg }}>
+              <RouteMap
+                kind={kind}
+                progress={tracking.progress}
+                origin={tracking.origin}
+                destination={tracking.destination}
+                agentLocation={tracking.agentLocation}
+              />
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <View>
+                  <Text style={[type.bodyStrong, { color: colors.textPrimary }]}>{tracking.agentName}</Text>
+                  <Text style={[type.caption, { color: colors.textMuted }]}>
+                    {isDone ? "Arrived" : `${tracking.etaRemainingMinutes} min remaining`}
+                  </Text>
+                </View>
+                <View style={{ backgroundColor: color + "22", paddingHorizontal: spacing.md, paddingVertical: spacing.xs, borderRadius: 999 }}>
+                  <Text style={[type.caption, { color, fontWeight: "700" }]}>{Math.round(tracking.progress * 100)}%</Text>
+                </View>
               </View>
             </View>
-          </View>
+          </GlassCard>
 
           {isDone && (
-            <View style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg }}>
+            <GlassCard>
               <Text style={[type.body, { color: colors.textSecondary }]}>
                 {kind === "ride" ? "Hope it was a smooth ride." : "Enjoy! Let Myra know if anything was off."}
               </Text>
-            </View>
+            </GlassCard>
           )}
         </>
       )}

@@ -11,11 +11,27 @@ export const brand = {
   home: "#9B6BFF",
 };
 
+// Two-tone gradients per accent, used on icon glyphs, glows and selected
+// states so every surface reads richer than a single flat fill.
+export const gradients = {
+  myra: [brand.myraStart, brand.myraEnd] as const,
+  ride: ["#3BD6C6", "#1D8577"] as const,
+  food: ["#FFB25E", "#FF6A3D"] as const,
+  meds: ["#5FA8FF", "#3D5FFF"] as const,
+  home: ["#B18CFF", "#7C4CFF"] as const,
+};
+
 export const dark = {
-  background: "#0B1220",
+  background: "#080C16",
+  backgroundGlowA: "#241A4A",
+  backgroundGlowB: "#2A1220",
   surface: "#121A2B",
   surfaceRaised: "#1B2438",
   border: "#242F47",
+  glass: "rgba(255,255,255,0.06)",
+  glassRaised: "rgba(255,255,255,0.09)",
+  glassBorder: "rgba(255,255,255,0.12)",
+  glassHighlight: "rgba(255,255,255,0.22)",
   textPrimary: "#F5F7FB",
   textSecondary: "#9AA6C2",
   textMuted: "#5E6A88",
@@ -26,10 +42,16 @@ export const dark = {
 };
 
 export const light = {
-  background: "#F6F7FB",
+  background: "#F4F5FB",
+  backgroundGlowA: "#E4DEFF",
+  backgroundGlowB: "#FFE3D9",
   surface: "#FFFFFF",
   surfaceRaised: "#FFFFFF",
   border: "#E4E8F1",
+  glass: "rgba(255,255,255,0.55)",
+  glassRaised: "rgba(255,255,255,0.72)",
+  glassBorder: "rgba(18,23,43,0.08)",
+  glassHighlight: "rgba(255,255,255,0.9)",
   textPrimary: "#12172B",
   textSecondary: "#4B5573",
   textMuted: "#8891AC",

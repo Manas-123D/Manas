@@ -6,15 +6,16 @@ import { Screen } from "../components/Screen";
 import { MyraHeroBanner } from "../components/MyraHeroBanner";
 import { TrendingCard } from "../components/TrendingCard";
 import { ServiceTile } from "../components/ServiceTile";
-import { useTheme, brand } from "../theme";
+import { GlassCard } from "../components/GlassCard";
+import { useTheme, gradients } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { apiRequest } from "../api/client";
 
-const SERVICES: { label: string; emoji: string; color: string; screen: string }[] = [
-  { label: "NexRide", emoji: "🚕", color: brand.ride, screen: "NexRide" },
-  { label: "NexFood", emoji: "🍔", color: brand.food, screen: "NexFood" },
-  { label: "NexMeds", emoji: "💊", color: brand.meds, screen: "NexMeds" },
-  { label: "NexHome", emoji: "🏠", color: brand.home, screen: "NexHome" },
+const SERVICES: { label: string; emoji: string; colorPair: readonly [string, string]; screen: string }[] = [
+  { label: "NexRide", emoji: "🚕", colorPair: gradients.ride, screen: "NexRide" },
+  { label: "NexFood", emoji: "🍔", colorPair: gradients.food, screen: "NexFood" },
+  { label: "NexMeds", emoji: "💊", colorPair: gradients.meds, screen: "NexMeds" },
+  { label: "NexHome", emoji: "🏠", colorPair: gradients.home, screen: "NexHome" },
 ];
 
 function greetingForHour(hour: number): string {
@@ -97,11 +98,11 @@ export function HomeScreen() {
           />
         ) : (
           !loading && (
-            <View style={{ backgroundColor: colors.surface, borderRadius: 16, padding: spacing.lg, borderWidth: 1, borderColor: colors.border }}>
+            <GlassCard>
               <Text style={[type.body, { color: colors.textSecondary }]}>
                 Nothing urgent right now — Myra's watching traffic, weather and your routines and will speak up when something's worth it.
               </Text>
-            </View>
+            </GlassCard>
           )
         )}
 
@@ -109,7 +110,7 @@ export function HomeScreen() {
           <Text style={[type.subtitle, { color: colors.textPrimary }]}>Services</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.md }}>
             {SERVICES.map((s) => (
-              <ServiceTile key={s.label} label={s.label} emoji={s.emoji} color={s.color} onPress={() => navigation.navigate(s.screen)} />
+              <ServiceTile key={s.label} label={s.label} emoji={s.emoji} colorPair={s.colorPair} onPress={() => navigation.navigate(s.screen)} />
             ))}
           </View>
         </View>

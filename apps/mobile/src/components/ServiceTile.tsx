@@ -1,40 +1,38 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { useTheme } from "../theme";
+import { GlassCard } from "./GlassCard";
+import { PressableScale } from "./PressableScale";
 
 interface ServiceTileProps {
   label: string;
   emoji: string;
-  color: string;
+  colorPair: readonly [string, string];
   onPress: () => void;
 }
 
-export function ServiceTile({ label, emoji, color, onPress }: ServiceTileProps) {
-  const { colors, radius, spacing, type } = useTheme();
+export function ServiceTile({ label, emoji, colorPair, onPress }: ServiceTileProps) {
+  const { colors, spacing, radius, type, shadow } = useTheme();
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.tile,
-        {
-          backgroundColor: colors.surface,
-          borderColor: colors.border,
-          borderRadius: radius.lg,
-          padding: spacing.md,
-          opacity: pressed ? 0.8 : 1,
-        },
-      ]}
-    >
-      <View style={[styles.iconWrap, { backgroundColor: color + "22", borderRadius: radius.md }]}>
-        <Text style={{ fontSize: 22 }}>{emoji}</Text>
-      </View>
-      <Text style={[type.bodyStrong, { color: colors.textPrimary, marginTop: spacing.sm }]}>{label}</Text>
-    </Pressable>
+    <PressableScale style={styles.tile} onPress={onPress} scaleTo={0.95}>
+      <GlassCard padding={spacing.md}>
+        <LinearGradient
+          colors={colorPair}
+          start={{ x: 0.15, y: 0.1 }}
+          end={{ x: 0.9, y: 1 }}
+          style={[styles.iconWrap, { borderRadius: radius.md }, shadow.glow(colorPair[1], 0.35)]}
+        >
+          <Text style={{ fontSize: 22 }}>{emoji}</Text>
+        </LinearGradient>
+        <Text style={[type.bodyStrong, { color: colors.textPrimary, marginTop: spacing.sm }]}>{label}</Text>
+      </GlassCard>
+    </PressableScale>
   );
 }
 
 const styles = StyleSheet.create({
-  tile: { flex: 1, borderWidth: 1, minWidth: "45%" },
+  tile: { flex: 1, minWidth: "45%" },
   iconWrap: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
 });

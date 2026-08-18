@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Medicine } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
+import { GlassCard } from "../components/GlassCard";
+import { PressableScale } from "../components/PressableScale";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { useTheme, brand } from "../theme";
 import { apiRequest } from "../api/client";
 
 export function NexMedsScreen() {
-  const { colors, spacing, radius, type } = useTheme();
+  const { colors, spacing, type } = useTheme();
   const navigation = useNavigation<any>();
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [disclaimer, setDisclaimer] = useState("");
@@ -43,26 +45,17 @@ export function NexMedsScreen() {
         {medicines.map((m) => {
           const isSelected = selected === m.id;
           return (
-            <Pressable
-              key={m.id}
-              onPress={() => setSelected(m.id)}
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: colors.surface,
-                borderColor: isSelected ? brand.meds : colors.border,
-                borderWidth: isSelected ? 2 : 1,
-                borderRadius: radius.lg,
-                padding: spacing.lg,
-              }}
-            >
-              <View>
-                <Text style={[type.bodyStrong, { color: colors.textPrimary }]}>{m.name}</Text>
-                <Text style={[type.caption, { color: colors.textMuted }]}>{m.packSize}{m.requiresPrescription ? " · Prescription required" : ""}</Text>
-              </View>
-              <Text style={[type.subtitle, { color: colors.textPrimary }]}>₹{m.price}</Text>
-            </Pressable>
+            <PressableScale key={m.id} onPress={() => setSelected(m.id)} scaleTo={0.98}>
+              <GlassCard accentColor={isSelected ? brand.meds : undefined}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                  <View>
+                    <Text style={[type.bodyStrong, { color: colors.textPrimary }]}>{m.name}</Text>
+                    <Text style={[type.caption, { color: colors.textMuted }]}>{m.packSize}{m.requiresPrescription ? " · Prescription required" : ""}</Text>
+                  </View>
+                  <Text style={[type.subtitle, { color: colors.textPrimary }]}>₹{m.price}</Text>
+                </View>
+              </GlassCard>
+            </PressableScale>
           );
         })}
       </View>

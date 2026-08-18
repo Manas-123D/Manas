@@ -2,6 +2,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../theme";
+import { AmbientBackground } from "./AmbientBackground";
 
 interface ScreenProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export function Screen({ children, scroll = true, style }: ScreenProps) {
 
   return (
     <SafeAreaView style={[styles.flex, { backgroundColor: colors.background }]} edges={["top"]}>
+      <AmbientBackground />
       {scroll ? (
         <ScrollView contentContainerStyle={styles.grow} showsVerticalScrollIndicator={false}>
           {content}

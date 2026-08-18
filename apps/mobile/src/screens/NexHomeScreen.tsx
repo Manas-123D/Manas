@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { HomeServiceCategory } from "@nexserv/shared";
 import { Screen } from "../components/Screen";
+import { GlassCard } from "../components/GlassCard";
+import { PressableScale } from "../components/PressableScale";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { useTheme, brand } from "../theme";
 import { apiRequest } from "../api/client";
@@ -40,10 +42,10 @@ export function NexHomeScreen() {
     return (
       <Screen>
         <Text style={[type.title, { color: colors.textPrimary }]}>Visit scheduled 🏠</Text>
-        <View style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.lg, padding: spacing.lg, gap: spacing.xs }}>
+        <GlassCard>
           <Text style={[type.body, { color: colors.textSecondary }]}>{confirmed.technicianName ?? "A technician"} will visit tomorrow</Text>
-          <Text style={[type.subtitle, { color: colors.textPrimary }]}>Estimated ₹{confirmed.priceEstimate}</Text>
-        </View>
+          <Text style={[type.subtitle, { color: colors.textPrimary, marginTop: 4 }]}>Estimated ₹{confirmed.priceEstimate}</Text>
+        </GlassCard>
         <PrimaryButton label="Book another" onPress={() => { setConfirmed(null); setCategory(null); setDescription(""); }} />
       </Screen>
     );
@@ -58,20 +60,20 @@ export function NexHomeScreen() {
         {CATEGORIES.map((c) => {
           const isSelected = category === c.key;
           return (
-            <Pressable
-              key={c.key}
-              onPress={() => setCategory(c.key)}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 14,
-                borderRadius: radius.pill,
-                borderWidth: isSelected ? 2 : 1,
-                borderColor: isSelected ? brand.home : colors.border,
-                backgroundColor: colors.surface,
-              }}
-            >
-              <Text style={[type.caption, { color: colors.textPrimary }]}>{c.emoji} {c.label}</Text>
-            </Pressable>
+            <PressableScale key={c.key} onPress={() => setCategory(c.key)} scaleTo={0.94}>
+              <View
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 14,
+                  borderRadius: radius.pill,
+                  borderWidth: isSelected ? 1.5 : 1,
+                  borderColor: isSelected ? brand.home : colors.glassBorder,
+                  backgroundColor: isSelected ? brand.home + "1c" : colors.glass,
+                }}
+              >
+                <Text style={[type.caption, { color: colors.textPrimary }]}>{c.emoji} {c.label}</Text>
+              </View>
+            </PressableScale>
           );
         })}
       </View>
@@ -82,7 +84,16 @@ export function NexHomeScreen() {
         placeholder="Briefly describe the issue (optional)"
         placeholderTextColor={colors.textMuted}
         multiline
-        style={{ backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: radius.md, padding: spacing.md, color: colors.textPrimary, minHeight: 90, textAlignVertical: "top" }}
+        style={{
+          backgroundColor: colors.glass,
+          borderColor: colors.glassBorder,
+          borderWidth: 1,
+          borderRadius: radius.md,
+          padding: spacing.md,
+          color: colors.textPrimary,
+          minHeight: 90,
+          textAlignVertical: "top",
+        }}
       />
 
       <PrimaryButton label={loading ? "Scheduling..." : "Schedule for tomorrow"} onPress={book} disabled={!category} loading={loading} />

@@ -1,9 +1,10 @@
 import React from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, DarkTheme, DefaultTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useTheme } from "../theme";
+import { BlurView } from "expo-blur";
+import { useTheme, brand } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import { OnboardingScreen } from "../screens/OnboardingScreen";
 import { HomeScreen } from "../screens/HomeScreen";
@@ -25,15 +26,26 @@ const TAB_ICON: Record<string, string> = {
 };
 
 function MainTabs() {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: colors.textPrimary,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
-        tabBarIcon: () => <Text style={{ fontSize: 18 }}>{TAB_ICON[route.name]}</Text>,
+        tabBarShowLabel: true,
+        tabBarStyle: { backgroundColor: "transparent", borderTopColor: colors.glassBorder, height: 66, paddingTop: 6 },
+        tabBarBackground: () => <BlurView intensity={isDark ? 55 : 75} tint={isDark ? "dark" : "light"} style={StyleSheet.absoluteFill} />,
+        tabBarIcon: ({ focused }) => (
+          <View
+            style={[
+              styles.tabIconWrap,
+              focused && { backgroundColor: brand.myraStart + (isDark ? "26" : "1a") },
+            ]}
+          >
+            <Text style={{ fontSize: 18 }}>{TAB_ICON[route.name]}</Text>
+          </View>
+        ),
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: "Home" }} />
@@ -46,7 +58,13 @@ function MainTabs() {
 function AppStack() {
   const { colors } = useTheme();
   return (
-    <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: colors.surface }, headerTintColor: colors.textPrimary, headerShadowVisible: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.surface },
+        headerTintColor: colors.textPrimary,
+        headerShadowVisible: false,
+      }}
+    >
       <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
       <Stack.Screen name="NexRide" component={NexRideScreen} options={{ title: "NexRide" }} />
       <Stack.Screen name="NexFood" component={NexFoodScreen} options={{ title: "NexFood" }} />
@@ -80,3 +98,7 @@ export function RootNavigator() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  tabIconWrap: { width: 40, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center" },
+});
