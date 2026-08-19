@@ -1,0 +1,291 @@
+.orbital-stage {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  perspective: 1400px;
+  cursor: default;
+}
+
+.orbital-scene {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.orbital-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(0px);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.orbital-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 74%;
+  height: 34%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.orbital-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.orbital-node-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+
+.orbital-node-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.orbital-node.focused {
+  z-index: 300;
+}
+
+/* ---------- Expanded glass detail card ---------- */
+
+.orbital-card {
+  position: absolute;
+  left: 50%;
+  width: 260px;
+  transform: translateX(-50%);
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(12, 12, 16, 0.86);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  animation: orbital-card-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.orbital-card.below {
+  top: calc(100% + 22px);
+}
+
+.orbital-card.above {
+  bottom: calc(100% + 22px);
+}
+
+.orbital-card-connector {
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 22px;
+  background: linear-gradient(rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-50%);
+}
+
+.orbital-card.below .orbital-card-connector {
+  top: -22px;
+}
+
+.orbital-card.above .orbital-card-connector {
+  bottom: -22px;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.35));
+}
+
+@keyframes orbital-card-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.orbital-card-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.orbital-card-badge {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.orbital-card-head h3 {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.orbital-card-head p {
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.orbital-card-features {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orbital-card-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.orbital-card-check {
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.orbital-card-stat {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.orbital-card-stat-value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.orbital-card-stat-label {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* ---------- Mobile: tap-to-expand stacked list ---------- */
+
+.orbital-mobile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.orbital-mobile-item {
+  border-radius: 18px;
+  border: 1px solid var(--surface-border);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+
+.orbital-mobile-item.open {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.orbital-mobile-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+}
+
+.orbital-mobile-head-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.orbital-mobile-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.orbital-mobile-desc {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.orbital-mobile-chevron {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.orbital-mobile-body {
+  padding: 0 16px 18px;
+  animation: orbital-mobile-in 0.25s ease;
+}
+
+@keyframes orbital-mobile-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.orbital-mobile-body .orbital-card-features {
+  margin-top: 0;
+  padding-top: 16px;
+}

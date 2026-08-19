@@ -22,6 +22,7 @@
   --home-svc-2: #b18cff;
 
   --gradient-myra: linear-gradient(120deg, var(--myra-start), var(--myra-mid) 55%, var(--myra-end));
+  --glass-bg: rgba(16, 16, 20, 0.55);
 
   --font-display: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -155,8 +156,50 @@ img {
   transform: translateY(-1px);
 }
 
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* A pointer-tracked 3D tilt wrapper — see components/TiltCard.tsx. Applied
+   on top of whatever visual classes (e.g. glass-panel) the call site adds. */
+.tilt-card {
+  position: relative;
+  transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.tilt-card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--tilt-glow-x, 50%) var(--tilt-glow-y, 50%), var(--tilt-glow-color, transparent) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.tilt-card:hover .tilt-card-glow,
+.tilt-card:focus-within .tilt-card-glow {
+  opacity: 0.22;
+}
+
+.tilt-card-content {
+  position: relative;
+  z-index: 1;
+}
+
 @media (max-width: 720px) {
   .container {
     padding: 0 20px;
+  }
+}
+
+@media (hover: none) {
+  /* Touch devices: no pointer to tilt toward — keep cards flat and rely on tap states instead. */
+  .tilt-card {
+    transform: none !important;
   }
 }

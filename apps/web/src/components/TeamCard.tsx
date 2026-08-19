@@ -1,18 +1,19 @@
 import { useState } from "react";
 import type { TeamMember } from "../data/team";
+import { TiltCard } from "./TiltCard";
 import "./TeamCard.css";
 
 interface TeamCardProps {
   member: TeamMember;
 }
 
-/** Photo + name + designation always visible; hovering (or focusing, for keyboard users) the photo raises an overlay with what they do. Falls back to the gradient initials avatar if the photo file isn't there yet (or fails to load), so the card never shows a broken image. */
+/** Photo + name + designation always visible; hovering (or focusing, for keyboard users) the photo raises an overlay with what they do, on top of a 3D pointer tilt. Falls back to the gradient initials avatar if the photo file isn't there yet (or fails to load), so the card never shows a broken image. */
 export function TeamCard({ member }: TeamCardProps) {
   const [photoFailed, setPhotoFailed] = useState(false);
   const showPhoto = member.photoUrl && !photoFailed;
 
   return (
-    <div className="team-card" tabIndex={0}>
+    <TiltCard className="team-card" tabIndex={0} maxTilt={8} lift={4} glow={`${member.colors[0]}33`}>
       <div className="team-card-photo">
         {showPhoto ? (
           <img src={member.photoUrl} alt={member.name} onError={() => setPhotoFailed(true)} />
@@ -41,6 +42,6 @@ export function TeamCard({ member }: TeamCardProps) {
           {member.role}
         </p>
       </div>
-    </div>
+    </TiltCard>
   );
 }

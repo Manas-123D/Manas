@@ -1,5 +1,6 @@
 import { Reveal } from "../components/Reveal";
 import { TeamCard } from "../components/TeamCard";
+import { TiltCard } from "../components/TiltCard";
 import { TEAM } from "../data/team";
 import "./Home.css";
 import "./About.css";
@@ -49,11 +50,11 @@ export function About() {
 
               <div className="story-values">
                 {VALUES.map((v) => (
-                  <div className="story-value" key={v.num}>
+                  <TiltCard key={v.num} className="story-value glass-panel" maxTilt={8} lift={3} glow="#38BDF833">
                     <div className="story-value-num">{v.num}</div>
                     <h4>{v.title}</h4>
                     <p>{v.desc}</p>
-                  </div>
+                  </TiltCard>
                 ))}
               </div>
             </Reveal>
@@ -80,7 +81,7 @@ export function About() {
       </section>
 
       <Reveal>
-        <div className="cta-band" id="get-app">
+        <TiltCard className="cta-band" id="get-app" maxTilt={3} lift={0} glow="#7C6CF622">
           <span className="eyebrow">Join us early</span>
           <h2>Come build the everyday AI companion with us.</h2>
           <p>NexServ is small on purpose, for now. Try the app and tell us what Myra should do next.</p>
@@ -92,7 +93,7 @@ export function About() {
               Back to home
             </a>
           </div>
-        </div>
+        </TiltCard>
       </Reveal>
     </>
   );

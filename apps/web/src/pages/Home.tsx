@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Reveal } from "../components/Reveal";
 import { GlowOrb } from "../components/GlowOrb";
+import { OrbitalServices, type OrbitalService } from "../components/OrbitalServices";
+import { TiltCard } from "../components/TiltCard";
 import "./Home.css";
 
-const SERVICES = [
+const SERVICES: OrbitalService[] = [
   {
     key: "ride",
     name: "NexRide",
@@ -11,6 +13,8 @@ const SERVICES = [
     color: "#2FB3A3",
     colors: ["#1D8577", "#3BD6C6"] as const,
     desc: "Bikes, autos, cabs and pooled rides — matched and priced the moment you open the app.",
+    features: ["Live GPS tracking, pickup to drop", "Bike, auto, cab or pooled — you choose", "Fare shown before you book, no surprises"],
+    stat: { value: "~3 min", label: "avg match time" },
   },
   {
     key: "food",
@@ -19,6 +23,8 @@ const SERVICES = [
     color: "#FF8A3D",
     colors: ["#FF6A3D", "#FFB25E"] as const,
     desc: "Restaurants near you, trending picks and reorders Myra already knows you'll like.",
+    features: ["Real restaurants, live menus & prices", "Myra remembers your usual order", "Live kitchen-to-door tracking"],
+    stat: { value: "40+", label: "restaurants nearby" },
   },
   {
     key: "meds",
@@ -27,6 +33,8 @@ const SERVICES = [
     color: "#3D8BFF",
     colors: ["#3D5FFF", "#5FA8FF"] as const,
     desc: "Prescription refills and pharmacy delivery, tracked door to door in real time.",
+    features: ["Refills without repeating yourself", "Licensed pharmacy partners only", "Delivery tracked door to door"],
+    stat: { value: "24/7", label: "refill requests" },
   },
   {
     key: "home",
@@ -35,6 +43,8 @@ const SERVICES = [
     color: "#9B6BFF",
     colors: ["#7C4CFF", "#B18CFF"] as const,
     desc: "Vetted electricians, plumbers, cleaners and technicians, booked in a couple of taps.",
+    features: ["Verified electricians, plumbers & cleaners", "Upfront pricing before you confirm", "Rated by real NexServ customers"],
+    stat: { value: "4.8★", label: "avg technician rating" },
   },
 ];
 
@@ -45,9 +55,9 @@ const MYRA_FEATURES = [
 ];
 
 const STEPS = [
-  { title: "Tell Myra what you need", desc: "Type, tap a suggestion, or let Myra notice — a ride to catch, dinner on a long day, a refill due this week." },
-  { title: "Get matched instantly", desc: "Real drivers, restaurants, pharmacies and technicians near you, priced and timed live." },
-  { title: "Track it end to end", desc: "One consistent live-tracking view for every service, from request to arrival." },
+  { title: "Tell Myra what you need", desc: "Type, tap a suggestion, or let Myra notice — a ride to catch, dinner on a long day, a refill due this week.", glow: "#38BDF8" },
+  { title: "Get matched instantly", desc: "Real drivers, restaurants, pharmacies and technicians near you, priced and timed live.", glow: "#7C6CF6" },
+  { title: "Track it end to end", desc: "One consistent live-tracking view for every service, from request to arrival.", glow: "#B565F0" },
 ];
 
 export function Home() {
@@ -92,16 +102,18 @@ export function Home() {
             </div>
           </div>
 
-          <motion.div className="hero-visual" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.1 }}>
-            <GlowOrb size={380} colors={["#38BDF8", "#7C6CF6", "#B565F0"]} variant="ripple" />
-            <div className="hero-visual-badge" style={{ top: "8%", left: "4%" }}>
-              <span className="dot" style={{ background: "#2FB3A3" }} />
-              Ride matched · 3 min
-            </div>
-            <div className="hero-visual-badge" style={{ bottom: "14%", right: "4%" }}>
-              <span className="dot" style={{ background: "#FF8A3D" }} />
-              Dinner reorder ready
-            </div>
+          <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.1 }}>
+            <TiltCard className="hero-visual" maxTilt={7} lift={0}>
+              <GlowOrb size={380} colors={["#38BDF8", "#7C6CF6", "#B565F0"]} variant="ripple" />
+              <div className="hero-visual-badge" style={{ top: "8%", left: "4%" }}>
+                <span className="dot" style={{ background: "#2FB3A3" }} />
+                Ride matched · 3 min
+              </div>
+              <div className="hero-visual-badge" style={{ bottom: "14%", right: "4%" }}>
+                <span className="dot" style={{ background: "#FF8A3D" }} />
+                Dinner reorder ready
+              </div>
+            </TiltCard>
           </motion.div>
         </div>
       </section>
@@ -111,23 +123,12 @@ export function Home() {
           <Reveal className="section-head center">
             <span className="eyebrow">Everything, in one place</span>
             <h2>Four services. One consistent experience.</h2>
-            <p>Every NexServ service shares the same live tracking, the same trust and the same Myra — so switching between them never feels like switching apps.</p>
+            <p>Every NexServ service shares the same live tracking, the same trust and the same Myra — hover or tap a service to see what it does.</p>
           </Reveal>
 
-          <div className="services-grid">
-            {SERVICES.map((s, i) => (
-              <Reveal key={s.key} delay={i * 0.08}>
-                <div className="service-card">
-                  <div className="service-card-glow" style={{ background: s.color }} />
-                  <div className="service-icon-badge" style={{ background: `${s.color}1f`, border: `1px solid ${s.color}44` }}>
-                    {s.icon}
-                  </div>
-                  <h3>{s.name}</h3>
-                  <p>{s.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.1}>
+            <OrbitalServices services={SERVICES} />
+          </Reveal>
         </div>
       </section>
 
@@ -149,13 +150,13 @@ export function Home() {
 
             <div className="myra-features">
               {MYRA_FEATURES.map((f) => (
-                <div className="myra-feature" key={f.title}>
+                <TiltCard key={f.title} className="myra-feature glass-panel" maxTilt={6} lift={2} glow="#7C6CF633">
                   <div className="myra-feature-icon">{f.icon}</div>
                   <div>
                     <h4>{f.title}</h4>
                     <p>{f.desc}</p>
                   </div>
-                </div>
+                </TiltCard>
               ))}
             </div>
           </Reveal>
@@ -172,11 +173,11 @@ export function Home() {
           <div className="steps-grid">
             {STEPS.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.1}>
-                <div className="step-card">
+                <TiltCard className="step-card glass-panel" glow={`${s.glow}33`}>
                   <div className="step-number">STEP {String(i + 1).padStart(2, "0")}</div>
                   <h3>{s.title}</h3>
                   <p>{s.desc}</p>
-                </div>
+                </TiltCard>
               </Reveal>
             ))}
           </div>
@@ -184,7 +185,7 @@ export function Home() {
       </section>
 
       <Reveal>
-        <div className="cta-band" id="get-app">
+        <TiltCard className="cta-band" id="get-app" maxTilt={3} lift={0} glow="#7C6CF622">
           <span className="eyebrow">Available now</span>
           <h2>Bring your everyday services under one roof.</h2>
           <p>Download NexServ and let Myra start learning your routines from day one.</p>
@@ -196,7 +197,7 @@ export function Home() {
               Download for Android
             </a>
           </div>
-        </div>
+        </TiltCard>
       </Reveal>
     </>
   );
