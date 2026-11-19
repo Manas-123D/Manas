@@ -1,0 +1,533 @@
+<title>Nagalakshmi Campaign Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700;800&family=Ramabhadra&display=swap">
+<style>
+/* Layout: a working desk of print-ready sheets (pamphlet, WhatsApp square), then copy-ready slogans and messages. */
+:root {
+  /* page chrome (theme-aware) */
+  --bg: #f3f5ef;
+  --surface: #ffffff;
+  --fg: #1d2620;
+  --muted: #5b6a5f;
+  --line: #d9e0d4;
+  --accent: #d9560f;
+  --accent-ink: #ffffff;
+  --leaf: #2d6e3a;
+  /* print palette (fixed, same in both themes) */
+  --p-paper: #fffaf1;
+  --p-orange: #e3600f;
+  --p-orange-deep: #b8460a;
+  --p-green: #24603a;
+  --p-green-soft: #e4efe2;
+  --p-ink: #1b231d;
+  --p-grey: #6f7a72;
+  /* type */
+  --display: "Ramabhadra", "Noto Sans Telugu", sans-serif;
+  --body: "Noto Sans Telugu", "Nirmala UI", "Gautami", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a16; --surface: #1d2520; --fg: #e8eee8; --muted: #9fb0a4;
+    --line: #2f3a33; --accent: #f07a2e; --accent-ink: #1a1208; --leaf: #7fc28c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a16; --surface: #1d2520; --fg: #e8eee8; --muted: #9fb0a4;
+  --line: #2f3a33; --accent: #f07a2e; --accent-ink: #1a1208; --leaf: #7fc28c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--body);
+  font-size: 15px; line-height: 1.6;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: grid; gap: 40px;
+}
+header.top { display: grid; gap: 6px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 5vw, 42px); line-height: 1.2; margin: 0; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--accent); }
+.lede { margin: 0; color: var(--muted); max-width: 62ch; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; line-height: 1.3; }
+.sec { display: grid; gap: 16px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.sec-head p { margin: 0; color: var(--muted); font-size: 14px; max-width: 60ch; }
+
+.desk { display: grid; grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 900px) { .desk { grid-template-columns: minmax(0, 1fr); } }
+.tools { display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+.tools h3 { margin: 0; font-size: 15px; font-weight: 800; }
+.tools p { margin: 0; font-size: 14px; color: var(--muted); }
+.tools ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
+.btn {
+  appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 14px;
+  background: var(--accent); color: var(--accent-ink); padding: 9px 14px; border-radius: 8px;
+  display: inline-flex; align-items: center; gap: 8px; justify-self: start;
+}
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+.btn:focus-visible, [contenteditable]:focus-visible, .copy:focus-visible { outline: 3px solid var(--leaf); outline-offset: 2px; }
+.field { display: grid; gap: 4px; }
+.field label { font-size: 13px; font-weight: 700; }
+.field input {
+  font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--fg); width: 100%;
+}
+
+/* fixed-size sheets scaled to fit */
+.stage { width: 100%; position: relative; }
+.stage > .sheet { transform-origin: top left; position: absolute; top: 0; left: 0; box-shadow: 0 10px 30px rgba(20,30,20,.18); }
+
+/* ===================== PAMPHLET ===================== */
+.pamphlet {
+  width: 560px; height: 792px; background: var(--p-paper); color: var(--p-ink);
+  font-family: var(--body); display: grid;
+  grid-template-rows: 40px 214px 104px auto 1fr 30px; overflow: hidden;
+}
+.pm-top {
+  background: var(--p-green); color: #fff; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px; font-weight: 700; font-size: 14px; letter-spacing: .01em;
+}
+.pm-top b { font-weight: 800; background: #fff; color: var(--p-green); padding: 1px 10px; border-radius: 99px; font-size: 13px; }
+.pm-hero { position: relative; display: grid; grid-template-columns: 172px 1fr; gap: 20px; align-items: center; padding: 14px 22px 10px; }
+.pm-hero::before {
+  content: ""; position: absolute; right: -90px; top: -70px; width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, #ffe3cc 0%, #ffe3cc00 70%);
+}
+.photo {
+  position: relative; width: 172px; height: 172px; border-radius: 50%; overflow: hidden;
+  background: var(--p-green-soft); border: 5px solid #fff; box-shadow: 0 0 0 3px var(--p-orange);
+  display: grid; place-items: center; cursor: pointer;
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo .ph { display: grid; justify-items: center; gap: 2px; color: var(--p-green); font-size: 12px; font-weight: 700; text-align: center; }
+.photo .ph svg { width: 70px; height: 70px; }
+.who { position: relative; display: grid; gap: 4px; align-content: center; }
+.badge {
+  justify-self: start; font-size: 13px; font-weight: 800; color: var(--p-orange-deep);
+  border: 2px solid var(--p-orange); padding: 1px 12px; border-radius: 99px; background: #fff;
+}
+.name { font-family: var(--display); color: var(--p-orange-deep); line-height: 1.15; margin: 4px 0 0; }
+.name .s { display: block; font-size: 26px; color: var(--p-green); }
+.name .l { display: block; font-size: 46px; }
+.wife { font-size: 15.5px; font-weight: 700; color: var(--p-ink); line-height: 1.45; }
+.wife span { color: var(--p-green); }
+
+.pm-band {
+  background: var(--p-orange); color: #fff; display: grid; grid-template-columns: 112px 1fr; gap: 18px;
+  align-items: center; padding: 0 22px; position: relative;
+}
+.symbox {
+  width: 112px; height: 112px; margin-top: -22px; background: #fff; border-radius: 14px;
+  border: 4px solid var(--p-green); display: grid; place-items: center; box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+.symbox svg { width: 74px; height: 100px; }
+.band-text { display: grid; gap: 2px; }
+.band-text .big { font-family: var(--display); font-size: 31px; line-height: 1.2; }
+.band-text .small { font-size: 15px; font-weight: 700; opacity: .95; }
+
+.pm-works { padding: 16px 22px 6px; display: grid; gap: 10px; align-content: start; }
+.pm-works h4 { margin: 0; font-size: 16px; font-weight: 800; color: var(--p-green); display: flex; align-items: center; gap: 10px; }
+.pm-works h4::after { content: ""; flex: 1; height: 2px; background: var(--p-green-soft); }
+.grid6 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 14px; }
+.w { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; }
+.ic {
+  width: 40px; height: 40px; border-radius: 10px; background: var(--p-green-soft); color: var(--p-green);
+  display: grid; place-items: center;
+}
+.ic svg { width: 24px; height: 24px; }
+.w b { display: block; font-size: 14.5px; line-height: 1.3; color: var(--p-ink); }
+.w span { display: block; font-size: 11.8px; line-height: 1.38; color: #3d4a41; }
+
+.pm-bottom { display: grid; grid-template-columns: 236px 1fr; gap: 16px; padding: 10px 22px 12px; align-items: center; }
+.ballot { border: 2px dashed var(--p-grey); border-radius: 10px; padding: 8px 10px; display: grid; gap: 5px; background: #fff; }
+.ballot .cap { font-size: 12.5px; font-weight: 800; color: var(--p-ink); }
+.brow { display: grid; grid-template-columns: 18px 1fr 34px 40px; gap: 6px; align-items: center; height: 26px; font-size: 11px; color: var(--p-grey); }
+.brow .bar { height: 7px; border-radius: 4px; background: #e2e5e1; }
+.brow .sym { width: 30px; height: 22px; border: 1px solid #cfd4cf; border-radius: 3px; }
+.brow .box { height: 24px; border: 1px solid #cfd4cf; border-radius: 3px; }
+.brow.me { background: #fff1e6; border-radius: 6px; outline: 2px solid var(--p-orange); color: var(--p-ink); font-weight: 800; }
+.brow.me .nm { font-size: 11.5px; line-height: 1.1; }
+.brow.me .sym { display: grid; place-items: center; border-color: var(--p-ink); background: #fff; }
+.brow.me .sym svg { width: 14px; height: 20px; }
+.brow.me .box { border-color: var(--p-ink); display: grid; place-items: center; background: #fff; }
+.stamp { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #3346a8; color: #3346a8; display: grid; place-items: center; transform: rotate(-12deg); }
+.stamp svg { width: 14px; height: 14px; }
+.ballot .note { font-size: 11px; line-height: 1.35; color: var(--p-ink); }
+.appeal { display: grid; align-content: center; gap: 8px; }
+.appeal p { margin: 0; font-size: 14.5px; font-weight: 700; line-height: 1.5; }
+.appeal p em { font-style: normal; color: var(--p-orange-deep); }
+.appeal .sign { font-size: 13px; font-weight: 600; color: var(--p-grey); line-height: 1.35; }
+.appeal .sign b { display: block; font-family: var(--display); font-weight: 400; font-size: 20px; color: var(--p-green); }
+.pm-foot {
+  background: var(--p-green); color: #fff; font-size: 11.5px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 22px; gap: 12px;
+}
+.ed { border-bottom: 1px dotted rgba(255,255,255,.7); min-width: 70px; display: inline-block; outline: none; }
+.ed:empty::before { content: attr(data-ph); opacity: .75; }
+
+/* ===================== WHATSAPP SQUARE ===================== */
+.square {
+  width: 540px; height: 540px; background: var(--p-paper); color: var(--p-ink); font-family: var(--body);
+  position: relative; overflow: hidden; display: grid; grid-template-rows: 46px 1fr 96px;
+}
+.sq-top { background: var(--p-green); color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 800; font-size: 16px; }
+.sq-top i { width: 6px; height: 6px; border-radius: 50%; background: var(--p-orange); }
+.sq-mid { display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 10px; padding: 10px 30px 0 22px; position: relative; }
+.sq-mid::before { content: ""; position: absolute; left: -60px; top: 20px; width: 320px; height: 320px; border-radius: 50%; background: #ffe6d1; }
+.sq-carrot { position: relative; display: grid; place-items: center; }
+.sq-carrot svg { width: 150px; height: 250px; transform: rotate(-14deg); filter: drop-shadow(0 8px 10px rgba(120,50,0,.2)); }
+.sq-carrot .tag { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); background: var(--p-green); color: #fff; font-weight: 800; font-size: 14px; padding: 2px 14px; border-radius: 99px; white-space: nowrap; }
+.sq-who { position: relative; display: grid; gap: 6px; }
+.sq-who .s { font-family: var(--display); font-size: 26px; color: var(--p-green); line-height: 1.1; }
+.sq-who .l { font-family: var(--display); font-size: 50px; color: var(--p-orange-deep); line-height: 1.1; }
+.sq-who .wife { font-size: 16px; }
+.sq-who .pos { font-size: 15px; font-weight: 800; color: #fff; background: var(--p-ink); justify-self: start; padding: 2px 12px; border-radius: 6px; margin-top: 4px; }
+.sq-bot { background: var(--p-orange); color: #fff; display: grid; place-items: center; align-content: center; text-align: center; gap: 0; }
+.sq-bot .big { font-family: var(--display); font-size: 32px; line-height: 1.25; }
+.sq-bot .small { font-size: 15px; font-weight: 700; }
+
+/* ===================== SLOGANS & MESSAGES ===================== */
+.slogans { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 12px; }
+.slogan {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; align-items: start;
+}
+.slogan .te { font-size: 18px; font-weight: 700; line-height: 1.5; }
+.slogan .en { grid-column: 1; font-size: 13px; color: var(--muted); }
+.slogan .copy { grid-row: 1 / span 2; grid-column: 2; }
+.copy {
+  appearance: none; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 7px; padding: 5px 10px; white-space: nowrap;
+}
+.copy.done { background: var(--leaf); color: #fff; border-color: var(--leaf); }
+.msgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; align-items: start; }
+.msg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.msg-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.msg-head b { font-size: 14px; }
+.msg-head small { display: block; color: var(--muted); font-size: 12px; font-weight: 600; }
+.bubble-wrap { padding: 14px; background: color-mix(in srgb, var(--leaf) 8%, var(--surface)); }
+.bubble {
+  background: var(--surface); border-radius: 0 10px 10px 10px; padding: 10px 12px; white-space: pre-wrap;
+  font-size: 15px; line-height: 1.6; box-shadow: 0 1px 1px rgba(0,0,0,.08); min-width: 0; overflow-wrap: anywhere;
+}
+.tips { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; }
+.tips ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: no-preference) { .copy { transition: background .15s; } }
+</style>
+
+<!-- shared carrot drawings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="cg" x1="0" x2="1">
+      <stop offset="0" stop-color="#f58a2c"/><stop offset=".55" stop-color="#ea6a12"/><stop offset="1" stop-color="#c9520a"/>
+    </linearGradient>
+    <symbol id="carrot" viewBox="0 0 120 200">
+      <path d="M58 64 C 48 44, 30 30, 22 8 C 40 16, 56 34, 62 58 Z" fill="#3f8f3a"/>
+      <path d="M60 62 C 58 40, 60 20, 68 2 C 74 22, 70 44, 64 62 Z" fill="#2f7a34"/>
+      <path d="M62 64 C 72 46, 88 34, 104 26 C 98 46, 82 58, 66 66 Z" fill="#4ea047"/>
+      <path d="M34 66 C 30 104, 48 160, 60 196 C 72 160, 90 104, 86 66 C 78 54, 42 54, 34 66 Z" fill="url(#cg)"/>
+      <g stroke="#b5480a" stroke-width="3" stroke-linecap="round" fill="none" opacity=".75">
+        <path d="M40 86 l12 2"/><path d="M70 98 l12 -2"/><path d="M44 116 l11 2"/><path d="M66 132 l11 -2"/><path d="M52 154 l8 1"/>
+      </g>
+      <path d="M44 70 C 42 96, 48 128, 56 156" stroke="#ffb57a" stroke-width="4" fill="none" stroke-linecap="round" opacity=".6"/>
+    </symbol>
+    <symbol id="carrot-bw" viewBox="0 0 120 200">
+      <g fill="none" stroke="#111" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M34 66 C 30 104, 48 160, 60 196 C 72 160, 90 104, 86 66 C 78 54, 42 54, 34 66 Z"/>
+        <path d="M58 60 C 48 44, 30 30, 22 8"/><path d="M60 60 C 60 40, 62 20, 68 2"/><path d="M62 62 C 74 46, 88 34, 104 26"/>
+        <path d="M42 90 l12 2"/><path d="M68 110 l12 -2"/><path d="M50 136 l10 2"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Sarpanch election · Independent candidate · Carrot symbol</span>
+    <h1>నిడదవోలు నాగలక్ష్మి గారి <em>ప్రచార సామగ్రి</em></h1>
+    <p class="lede">A one-page pamphlet, a WhatsApp image, short slogans and ready-to-send WhatsApp messages. Everything is in simple Telugu, with only the main points.</p>
+  </header>
+
+  <!-- PAMPHLET -->
+  <section class="sec" aria-labelledby="s-pam">
+    <div class="sec-head">
+      <h2 id="s-pam">1. Pamphlet (A5)</h2>
+      <p>Tap the photo circle to add her photo. Tap the date and printer lines at the bottom of the sheet to fill them in.</p>
+    </div>
+    <div class="desk">
+      <div class="stage" data-w="560" data-h="792">
+        <article class="sheet pamphlet" id="pamphlet" aria-label="Telugu pamphlet">
+          <div class="pm-top"><span>గ్రామ పంచాయతీ ఎన్నికలు</span><b>సర్పంచ్ పదవికి</b></div>
+
+          <div class="pm-hero">
+            <label class="photo" for="photoIn" title="Add photo">
+              <div class="ph" data-ph>
+                <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><circle cx="32" cy="22" r="12"/><path d="M10 58c2-14 11-21 22-21s20 7 22 21z"/></svg>
+                <span>ఫోటో</span>
+              </div>
+            </label>
+            <div class="who">
+              <span class="badge">స్వతంత్ర అభ్యర్థి</span>
+              <h3 class="name"><span class="s">నిడదవోలు</span><span class="l">నాగలక్ష్మి</span></h3>
+              <div class="wife">శ్రీ <span>నిడదవోలు రామారావు</span> గారి సతీమణి</div>
+            </div>
+          </div>
+
+          <div class="pm-band">
+            <div class="symbox"><svg aria-label="Carrot symbol"><use href="#carrot"/></svg></div>
+            <div class="band-text">
+              <div class="big">క్యారెట్ గుర్తుకే మీ ఓటు</div>
+              <div class="small">పార్టీ కోసం కాదు, ఊరి కోసం.</div>
+            </div>
+          </div>
+
+          <div class="pm-works">
+            <h4>గెలిచిన తర్వాత నేను చేసే పనులు</h4>
+            <div class="grid6">
+              <div class="w"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M6 6v4M10 6v4M14 6v4M18 6v4"/><path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></div>
+                <div><b>మురుగు కాలువలు</b><span>ప్రతి వీధిలో కాలువలు, తరచూ శుభ్రత</span></div></div>
+              <div class="w"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3 4 21M15 3l5 18"/><path d="M12 4v3M12 11v3M12 18v3"/></svg></div>
+                <div><b>వీధి రోడ్లు</b><span>గుంతలు లేని సీసీ రోడ్లు, మరమ్మతులు</span></div></div>
+              <div class="w"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 21V5a2 2 0 0 1 2-2h6"/><path d="M14 3h4l2 4h-8z"/><path d="M16 10v2M13 11l-1 1.5M19 11l1 1.5"/><path d="M3 21h6"/></svg></div>
+                <div><b>వీధి దీపాలు</b><span>ప్రతి వీధిలో వెలిగే దీపాలు</span></div></div>
+              <div class="w"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V11l7-4 7 4v10"/><path d="M12 7V2l4 1.5L12 5"/><path d="M10 21v-5h4v5"/></svg></div>
+                <div><b>ప్రభుత్వ పాఠశాల</b><span>తాగునీరు, మరుగుదొడ్లు, మంచి వసతులు</span></div></div>
+              <div class="w"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M12 9v8M8 13h8"/><path d="M9 5V3h6v2"/></svg></div>
+                <div><b>ఆసుపత్రి సేవలు</b><span>మందులు, వైద్యుల అందుబాటు కోసం కృషి</span></div></div>
+              <div class="w"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9.5 11h5M9.5 13.5h5M12 13.5c1.8 0 1.8 3-1 3l3 3"/></svg></div>
+                <div><b>పారదర్శక పాలన</b><span>పంచాయతీ ఖర్చులు ప్రజల ముందు</span></div></div>
+            </div>
+          </div>
+
+          <div class="pm-bottom">
+            <div class="ballot">
+              <div class="cap">ఓటు ఇలా వేయండి</div>
+              <div class="brow"><span>1</span><span class="bar"></span><span class="sym"></span><span class="box"></span></div>
+              <div class="brow me"><span>✓</span><span class="nm">నిడదవోలు నాగలక్ష్మి</span>
+                <span class="sym"><svg><use href="#carrot-bw"/></svg></span>
+                <span class="box"><span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 3v18M3 12h18"/></svg></span></span></div>
+              <div class="brow"><span>3</span><span class="bar"></span><span class="sym"></span><span class="box"></span></div>
+              <div class="note">బ్యాలెట్ పేపర్‌లో <b>క్యారెట్ గుర్తు</b> ఎదురుగా గడిలోనే ముద్ర వేయండి.</div>
+            </div>
+            <div class="appeal">
+              <p>మీ అమూల్యమైన ఓటును <em>క్యారెట్ గుర్తు</em>పై వేసి, నన్ను సర్పంచ్‌గా గెలిపించండి.</p>
+              <div class="sign">ఇట్లు, మీ ఊరి మనిషి<b>నిడదవోలు నాగలక్ష్మి</b></div>
+            </div>
+          </div>
+
+          <div class="pm-foot">
+            <span>పోలింగ్ తేదీ: <span class="ed" contenteditable="true" spellcheck="false" data-ph="__________"></span></span>
+            <span>ముద్రణ: <span class="ed" contenteditable="true" spellcheck="false" data-ph="__________"></span></span>
+          </div>
+        </article>
+      </div>
+
+      <aside class="tools">
+        <h3>Before printing</h3>
+        <input type="file" id="photoIn" accept="image/*" hidden>
+        <button class="btn" type="button" id="photoBtn">Add her photo</button>
+        <button class="btn ghost" type="button" id="photoClear" hidden>Remove photo</button>
+        <ul>
+          <li>Use a photo of her with folded hands (namaste), facing the camera, against a plain background.</li>
+          <li>Fill in the <b>polling date</b> and the <b>printer's name and address</b> in the green strip at the bottom. Election rules require the printer's details on every pamphlet.</li>
+          <li>On the real ballot the carrot is printed in <b>black and white</b>, so the sample ballot shows it that way too.</li>
+          <li>For about 200 voters, 300 copies on A5 paper is plenty, with spares for houses where people are away.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- WHATSAPP IMAGE -->
+  <section class="sec" aria-labelledby="s-sq">
+    <div class="sec-head">
+      <h2 id="s-sq">2. WhatsApp / Status image</h2>
+      <p>A square image for WhatsApp status, the profile picture of the village group, and forwards.</p>
+    </div>
+    <div class="desk">
+      <div class="stage" data-w="540" data-h="540">
+        <article class="sheet square" id="square" aria-label="WhatsApp square image">
+          <div class="sq-top"><span>సర్పంచ్ అభ్యర్థి</span><i></i><span>స్వతంత్ర</span></div>
+          <div class="sq-mid">
+            <div class="sq-carrot"><svg><use href="#carrot"/></svg><span class="tag">క్యారెట్ గుర్తు</span></div>
+            <div class="sq-who">
+              <span class="s">నిడదవోలు</span>
+              <span class="l">నాగలక్ష్మి</span>
+              <span class="wife">శ్రీ <span>నిడదవోలు రామారావు</span> గారి సతీమణి</span>
+              <span class="pos">మన ఊరి మనిషి</span>
+            </div>
+          </div>
+          <div class="sq-bot">
+            <div class="big">మీ ఓటు క్యారెట్ గుర్తుకే</div>
+            <div class="small">పార్టీ కోసం కాదు, ఊరి కోసం.</div>
+          </div>
+        </article>
+      </div>
+      <aside class="tools">
+        <h3>How to use it</h3>
+        <ul>
+          <li>Post it as WhatsApp status from every family member's phone, every day during the campaign.</li>
+          <li>Send it before each message below, so the carrot picture stays in people's minds.</li>
+          <li>Ask relatives in other towns to forward it to people from the village living near them.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SLOGANS -->
+  <section class="sec" aria-labelledby="s-slo">
+    <div class="sec-head">
+      <h2 id="s-slo">3. Slogans</h2>
+      <p>Short and plain, no big drama. Use one or two on walls and banners, and say them in conversation.</p>
+    </div>
+    <div class="slogans" id="slogans"></div>
+  </section>
+
+  <!-- MESSAGES -->
+  <section class="sec" aria-labelledby="s-msg">
+    <div class="sec-head">
+      <h2 id="s-msg">4. WhatsApp messages</h2>
+      <p>Send one message every two or three days, in this order. Personal sends work better than one big forward: send to each family directly.</p>
+    </div>
+    <div class="msgs" id="msgs"></div>
+    <div class="tips">
+      <b>With only about 200 voters</b>
+      <ul>
+        <li>Every vote counts. Make a list of all 200 names and mark each one: sure, maybe, or not with us.</li>
+        <li>She should visit every house herself at least twice. With 200 voters that takes only a few evenings.</li>
+        <li>On polling day, check the list by noon and personally call anyone from the "sure" list who hasn't voted yet.</li>
+        <li>Never offer money, liquor or gifts for votes. It's illegal, and her clean name is her biggest strength.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script>
+const SLOGANS = [
+  ["పార్టీ కోసం కాదు, ఊరి కోసం.", "Not for a party, for the village."],
+  ["ఏ పార్టీకీ బాకీ లేదు, ఊరికే జవాబుదారీ.", "Owes nothing to any party, answers only to the village."],
+  ["రామారావు గారి సతీమణి, మన నాగలక్ష్మి గారు.", "Ramarao garu's wife, our own Nagalakshmi garu."],
+  ["మన ఊరి మనిషి, మన సమస్యలు తెలిసిన మనిషి.", "One of us, who knows our problems."],
+  ["కాలువలు, రోడ్లు, దీపాలు. పని చేసే సర్పంచ్ కావాలి.", "Drains, roads, lights. We need a sarpanch who works."],
+  ["ఓటు క్యారెట్ గుర్తుకు, పని మన ఊరికి.", "The vote goes to the carrot, the work comes to our village."],
+];
+
+const MSGS = [
+  { t: "Introduction", w: "Send first · in her voice", m:
+`🙏 నమస్కారం,
+
+నేను నిడదవోలు నాగలక్ష్మి, శ్రీ నిడదవోలు రామారావు గారి సతీమణిని.
+
+ఈ పంచాయతీ ఎన్నికల్లో సర్పంచ్ పదవికి స్వతంత్ర అభ్యర్థిగా పోటీ చేస్తున్నాను. ఏ పార్టీ కోసం కాదు, మన ఊరి కోసం నిలబడ్డాను.
+
+మీ ఆశీస్సులు, మీ ఓటు నాకు కావాలి.
+
+🥕 నా గుర్తు: క్యారెట్` },
+  { t: "The works she will do", w: "2 to 3 days later", m:
+`🥕 నిడదవోలు నాగలక్ష్మి
+సర్పంచ్ అభ్యర్థి (స్వతంత్ర)
+
+గెలిచిన తర్వాత నేను చేసే పనులు:
+✅ ప్రతి వీధిలో మురుగు కాలువలు, తరచూ శుభ్రత
+✅ వీధి రోడ్ల నిర్మాణం, మరమ్మతులు
+✅ ప్రతి వీధిలో వెలిగే వీధి దీపాలు
+✅ ప్రభుత్వ పాఠశాలలో తాగునీరు, మరుగుదొడ్లు, వసతులు
+✅ ఆసుపత్రిలో మందులు, వైద్య సేవల కోసం అధికారులతో కృషి
+✅ పంచాయతీ ఖర్చుల వివరాలు ప్రజల ముందు
+
+మీ ఓటు క్యారెట్ గుర్తుకే 🙏` },
+  { t: "How to vote", w: "Mid-campaign · from family", m:
+`🗳️ ఓటు వేసేటప్పుడు ఒక్క విషయం గుర్తుంచుకోండి:
+
+బ్యాలెట్ పేపర్‌లో 🥕 క్యారెట్ గుర్తు ఎదురుగా ఉన్న గడిలో మాత్రమే ముద్ర వేయండి. ముద్ర గడి బయటకు వెళ్తే ఓటు చెల్లకపోవచ్చు.
+
+ఇంట్లో పెద్దవాళ్లకు కూడా ఈ విషయం చెప్పండి.
+
+సర్పంచ్ అభ్యర్థి: నిడదవోలు నాగలక్ష్మి 🙏` },
+  { t: "Day before polling", w: "Evening before · from family", m:
+`🙏 రేపు మన పంచాయతీ ఎన్నికల పోలింగ్.
+
+దయచేసి కుటుంబం అంతా కలిసి వచ్చి ఓటు వేయండి. బయట ఊళ్లలో ఉన్న మన వాళ్లకు కూడా గుర్తు చేయండి.
+
+సర్పంచ్ పదవికి
+🥕 క్యారెట్ గుర్తు
+నిడదవోలు నాగలక్ష్మి
+(శ్రీ నిడదవోలు రామారావు గారి సతీమణి)` },
+  { t: "Polling day morning", w: "Morning of polling", m:
+`🌅 ఈరోజే పంచాయతీ ఎన్నికల పోలింగ్.
+
+ఇంకా ఓటు వేయకపోతే, దయచేసి ఇప్పుడే వెళ్లి వేయండి. ప్రతి ఓటూ ముఖ్యమే.
+
+🥕 క్యారెట్ గుర్తు
+నిడదవోలు నాగలక్ష్మి 🙏` },
+  { t: "Thank you", w: "After the result", m:
+`🙏 మన ఊరి ప్రజలందరికీ హృదయపూర్వక ధన్యవాదాలు.
+
+మీరు ఇచ్చిన నమ్మకాన్ని నిలబెట్టుకుంటాను. ఏ సమస్య ఉన్నా నేరుగా నా దగ్గరికి రండి.
+
+మీ నిడదవోలు నాగలక్ష్మి` },
+];
+
+function copyText(text, btn) {
+  const ok = () => { const o = btn.textContent; btn.textContent = "Copied"; btn.classList.add("done"); setTimeout(() => { btn.textContent = o; btn.classList.remove("done"); }, 1500); };
+  const fallback = () => {
+    const target = btn.closest(".msg, .slogan")?.querySelector(".bubble, .te");
+    if (!target) return;
+    const r = document.createRange(); r.selectNodeContents(target);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    btn.textContent = "Selected, press copy";
+  };
+  try { navigator.clipboard.writeText(text).then(ok, fallback); } catch (e) { fallback(); }
+}
+
+const sl = document.getElementById("slogans");
+SLOGANS.forEach(([te, en], i) => {
+  const d = document.createElement("div"); d.className = "slogan";
+  d.innerHTML = `<div class="te"></div><div class="en"></div><button class="copy" type="button" id="cs${i}">Copy</button>`;
+  d.querySelector(".te").textContent = te; d.querySelector(".en").textContent = en;
+  d.querySelector("button").addEventListener("click", e => copyText(te, e.currentTarget));
+  sl.appendChild(d);
+});
+const ml = document.getElementById("msgs");
+MSGS.forEach((x, i) => {
+  const d = document.createElement("div"); d.className = "msg";
+  d.innerHTML = `<div class="msg-head"><div><b></b><small></small></div><button class="copy" type="button" id="cm${i}">Copy</button></div><div class="bubble-wrap"><div class="bubble"></div></div>`;
+  d.querySelector("b").textContent = `${i + 1}. ${x.t}`; d.querySelector("small").textContent = x.w;
+  d.querySelector(".bubble").textContent = x.m;
+  d.querySelector("button").addEventListener("click", e => copyText(x.m, e.currentTarget));
+  ml.appendChild(d);
+});
+
+/* scale fixed-size sheets to fit their column */
+function fit() {
+  document.querySelectorAll(".stage").forEach(st => {
+    const w = +st.dataset.w, h = +st.dataset.h;
+    const s = Math.min(1, st.clientWidth / w);
+    st.style.height = (h * s) + "px";
+    st.firstElementChild.style.transform = `scale(${s})`;
+  });
+}
+new ResizeObserver(fit).observe(document.body); fit();
+
+/* photo */
+const pin = document.getElementById("photoIn"), photo = document.querySelector(".photo"), clr = document.getElementById("photoClear");
+document.getElementById("photoBtn").addEventListener("click", () => pin.click());
+pin.addEventListener("change", () => {
+  const f = pin.files && pin.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    photo.querySelector("img")?.remove();
+    const img = new Image(); img.src = r.result; img.alt = "Nidadavolu Nagalakshmi";
+    photo.querySelector("[data-ph]").hidden = true; photo.appendChild(img); clr.hidden = false;
+  };
+  r.readAsDataURL(f);
+});
+clr.addEventListener("click", () => { photo.querySelector("img")?.remove(); photo.querySelector("[data-ph]").hidden = false; clr.hidden = true; pin.value = ""; });
+</script>
