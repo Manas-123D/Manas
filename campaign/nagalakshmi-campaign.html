@@ -106,7 +106,7 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
   background: var(--p-green-soft); border: 5px solid #fff; box-shadow: 0 0 0 3px var(--p-orange);
   display: grid; place-items: center; cursor: pointer;
 }
-.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo img, .sq-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
 .photo .ph { display: grid; justify-items: center; gap: 2px; color: var(--p-green); font-size: 12px; font-weight: 700; text-align: center; }
 .photo .ph svg { width: 70px; height: 70px; }
 .who { position: relative; display: grid; gap: 4px; align-content: center; }
@@ -182,9 +182,16 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
 .sq-top i { width: 6px; height: 6px; border-radius: 50%; background: var(--p-orange); }
 .sq-mid { display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 10px; padding: 10px 30px 0 22px; position: relative; }
 .sq-mid::before { content: ""; position: absolute; left: -60px; top: 20px; width: 320px; height: 320px; border-radius: 50%; background: #ffe6d1; }
-.sq-carrot { position: relative; display: grid; place-items: center; }
-.sq-carrot svg { width: 150px; height: 250px; transform: rotate(-14deg); filter: drop-shadow(0 8px 10px rgba(120,50,0,.2)); }
-.sq-carrot .tag { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); background: var(--p-green); color: #fff; font-weight: 800; font-size: 14px; padding: 2px 14px; border-radius: 99px; white-space: nowrap; }
+.sq-pic { position: relative; width: 200px; height: 230px; }
+.sq-photo {
+  width: 196px; height: 196px; border-radius: 50%; overflow: hidden; background: var(--p-green-soft);
+  border: 5px solid #fff; box-shadow: 0 0 0 3px var(--p-orange), 0 10px 18px rgba(0,0,0,.15);
+}
+.sq-sym {
+  position: absolute; right: -6px; bottom: 0; width: 82px; height: 82px; background: #fff; border-radius: 12px;
+  border: 3px solid var(--p-green); display: grid; place-items: center; box-shadow: 0 6px 12px rgba(0,0,0,.18);
+}
+.sq-sym svg { width: 52px; height: 70px; }
 .sq-who { position: relative; display: grid; gap: 6px; }
 .sq-who .s { font-family: var(--display); font-size: 26px; color: var(--p-green); line-height: 1.1; }
 .sq-who .l { font-family: var(--display); font-size: 50px; color: var(--p-orange-deep); line-height: 1.1; }
@@ -269,10 +276,7 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
 
           <div class="pm-hero">
             <label class="photo" for="photoIn" title="Add photo">
-              <div class="ph" data-ph>
-                <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><circle cx="32" cy="22" r="12"/><path d="M10 58c2-14 11-21 22-21s20 7 22 21z"/></svg>
-                <span>ఫోటో</span>
-              </div>
+              <img src="nagalakshmi.jpg" alt="Nidadavolu Nagalakshmi" data-photo>
             </label>
             <div class="who">
               <span class="badge">స్వతంత్ర అభ్యర్థి</span>
@@ -285,7 +289,7 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
             <div class="symbox"><svg aria-label="Carrot symbol"><use href="#carrot"/></svg></div>
             <div class="band-text">
               <div class="big">క్యారెట్ గుర్తుకే మీ ఓటు</div>
-              <div class="small">పార్టీ కోసం కాదు, ఊరి కోసం.</div>
+              <div class="small">మన ఊరి అభివృద్ధి కోసం.</div>
             </div>
           </div>
 
@@ -333,10 +337,8 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
       <aside class="tools">
         <h3>Before printing</h3>
         <input type="file" id="photoIn" accept="image/*" hidden>
-        <button class="btn" type="button" id="photoBtn">Add her photo</button>
-        <button class="btn ghost" type="button" id="photoClear" hidden>Remove photo</button>
+        <button class="btn ghost" type="button" id="photoBtn">Change photo</button>
         <ul>
-          <li>Use a photo of her with folded hands (namaste), facing the camera, against a plain background.</li>
           <li>Fill in the <b>polling date</b> and the <b>printer's name and address</b> in the green strip at the bottom. Election rules require the printer's details on every pamphlet.</li>
           <li>On the real ballot the carrot is printed in <b>black and white</b>, so the sample ballot shows it that way too.</li>
           <li>For about 200 voters, 300 copies on A5 paper is plenty, with spares for houses where people are away.</li>
@@ -354,9 +356,12 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
     <div class="desk">
       <div class="stage" data-w="540" data-h="540">
         <article class="sheet square" id="square" aria-label="WhatsApp square image">
-          <div class="sq-top"><span>సర్పంచ్ అభ్యర్థి</span><i></i><span>స్వతంత్ర</span></div>
+          <div class="sq-top"><span>సర్పంచ్ పదవికి స్వతంత్ర అభ్యర్థి</span></div>
           <div class="sq-mid">
-            <div class="sq-carrot"><svg><use href="#carrot"/></svg><span class="tag">క్యారెట్ గుర్తు</span></div>
+            <div class="sq-pic">
+              <div class="sq-photo"><img src="nagalakshmi.jpg" alt="Nidadavolu Nagalakshmi" data-photo></div>
+              <div class="sq-sym"><svg aria-label="Carrot symbol"><use href="#carrot"/></svg></div>
+            </div>
             <div class="sq-who">
               <span class="s">నిడదవోలు</span>
               <span class="l">నాగలక్ష్మి</span>
@@ -366,7 +371,7 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
           </div>
           <div class="sq-bot">
             <div class="big">మీ ఓటు క్యారెట్ గుర్తుకే</div>
-            <div class="small">పార్టీ కోసం కాదు, ఊరి కోసం.</div>
+            <div class="small">నిడదవోలు నాగలక్ష్మి గారిని సర్పంచ్‌గా గెలిపించండి</div>
           </div>
         </article>
       </div>
@@ -412,7 +417,6 @@ h2 { font-family: var(--display); font-weight: 400; font-size: 24px; margin: 0; 
 <script>
 const SLOGANS = [
   ["పార్టీ కోసం కాదు, ఊరి కోసం.", "Not for a party, for the village."],
-  ["ఏ పార్టీకీ బాకీ లేదు, ఊరికే జవాబుదారీ.", "Owes nothing to any party, answers only to the village."],
   ["రామారావు గారి సతీమణి, మన నాగలక్ష్మి గారు.", "Ramarao garu's wife, our own Nagalakshmi garu."],
   ["మన ఊరి మనిషి, మన సమస్యలు తెలిసిన మనిషి.", "One of us, who knows our problems."],
   ["కాలువలు, రోడ్లు, దీపాలు. పని చేసే సర్పంచ్ కావాలి.", "Drains, roads, lights. We need a sarpanch who works."],
@@ -425,14 +429,14 @@ const MSGS = [
 
 నేను నిడదవోలు నాగలక్ష్మి, శ్రీ నిడదవోలు రామారావు గారి సతీమణిని.
 
-ఈ పంచాయతీ ఎన్నికల్లో సర్పంచ్ పదవికి స్వతంత్ర అభ్యర్థిగా పోటీ చేస్తున్నాను. ఏ పార్టీ కోసం కాదు, మన ఊరి కోసం నిలబడ్డాను.
+ఈ పంచాయతీ ఎన్నికల్లో సర్పంచ్ పదవికి స్వతంత్ర అభ్యర్థిగా పోటీ చేస్తున్నాను. మన ఊరి అభివృద్ధి కోసం నిలబడ్డాను.
 
 మీ ఆశీస్సులు, మీ ఓటు నాకు కావాలి.
 
 🥕 నా గుర్తు: క్యారెట్` },
   { t: "The works she will do", w: "2 to 3 days later", m:
 `🥕 నిడదవోలు నాగలక్ష్మి
-సర్పంచ్ అభ్యర్థి (స్వతంత్ర)
+సర్పంచ్ అభ్యర్థి
 
 గెలిచిన తర్వాత నేను చేసే పనులు:
 ✅ ప్రతి వీధిలో మురుగు కాలువలు, తరచూ శుభ్రత
@@ -516,18 +520,13 @@ function fit() {
 }
 new ResizeObserver(fit).observe(document.body); fit();
 
-/* photo */
-const pin = document.getElementById("photoIn"), photo = document.querySelector(".photo"), clr = document.getElementById("photoClear");
+/* photo: replaces the picture on both the pamphlet and the WhatsApp image */
+const pin = document.getElementById("photoIn");
 document.getElementById("photoBtn").addEventListener("click", () => pin.click());
 pin.addEventListener("change", () => {
   const f = pin.files && pin.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => {
-    photo.querySelector("img")?.remove();
-    const img = new Image(); img.src = r.result; img.alt = "Nidadavolu Nagalakshmi";
-    photo.querySelector("[data-ph]").hidden = true; photo.appendChild(img); clr.hidden = false;
-  };
+  r.onload = () => document.querySelectorAll("img[data-photo]").forEach(img => { img.src = r.result; });
   r.readAsDataURL(f);
 });
-clr.addEventListener("click", () => { photo.querySelector("img")?.remove(); photo.querySelector("[data-ph]").hidden = false; clr.hidden = true; pin.value = ""; });
 </script>
